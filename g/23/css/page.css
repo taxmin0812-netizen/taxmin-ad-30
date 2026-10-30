@@ -1,0 +1,178 @@
+/* 23 호외 — 옛 신문 1면. 윤전기 → 신문 툭 → 號外 쾅 → 우리 가게에 세무사 생겼다 → 월 5만원. 놀이: 오려 쓰는 쿠폰(펜 체크 → 가위) */
+@font-face { font-family: "SM"; src: url(../fonts/SongMyung-Regular.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "NMB"; src: url(../fonts/NanumMyeongjo-ExtraBold.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "HOE"; src: url(../fonts/NotoSerifKR-Black-hoe.woff2) format("woff2"); font-display: block; }
+@font-face { font-family: "YS"; src: url(../fonts/YeonSung-Regular.woff2) format("woff2"); font-display: swap; }
+:root {
+  --ink: #141414; --red: #C8102E; --pp: #EFE7D6; --pp2: #E6DCC6; --pen: #1F3A93;
+  --serif: "NMB", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --gm-cta-bg: var(--red); --gm-cta-fg: #FFF8EC;
+  --gm-res-bg: rgba(26, 22, 18, .66); --gm-card: var(--pp); --gm-card-fg: var(--ink); --gm-or: var(--red);
+  --gm-legal: rgba(20, 20, 20, .62);
+  color-scheme: light;
+}
+html, body { background: #2A2622; }
+.hoe { background: #2A2622; color: var(--ink); }
+.grain::after, .paper::after, .gm-res-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .2; mix-blend-mode: multiply; border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* ── 윤전기 ── */
+.press { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: radial-gradient(70% 50% at 50% 8%, #4A4036 0, #221E1A 60%, #141210 100%); transition: opacity .6s .1s; }
+.press .lamp { position: absolute; left: 50%; top: -30%; width: 140%; height: 70%; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(255, 214, 150, .22), transparent); }
+.press .roll { position: absolute; left: -10%; width: 120%; height: 64px; border-radius: 32px;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 2px, transparent 2px 46px), linear-gradient(#2A2A2A, #9C9890 30%, #E2DED6 45%, #8C887F 62%, #232323);
+  box-shadow: 0 10px 24px rgba(0,0,0,.6); }
+.press .r1 { top: 46px; } .press .r2 { top: 112px; }
+.press .roll::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: repeating-linear-gradient(180deg, transparent 0 9px, rgba(0,0,0,.22) 9px 11px); background-size: 100% 22px; animation: roll .22s linear infinite; }
+@keyframes roll { to { background-position: 0 22px; } }
+.press .web { position: absolute; left: 12%; right: 12%; top: 0; bottom: 0; background: var(--pp);
+  background-image: repeating-linear-gradient(180deg, transparent 0 14px, rgba(20,20,20,.5) 14px 17px, transparent 17px 22px, rgba(20,20,20,.35) 22px 25px, transparent 25px 64px),
+    linear-gradient(90deg, rgba(0,0,0,.35), transparent 12%, transparent 88%, rgba(0,0,0,.35));
+  background-size: 100% 64px, 100% 100%; animation: web .35s linear infinite; opacity: .9; }
+@keyframes web { to { background-position: 0 64px, 0 0; } }
+.hoe:not(.intro) .press, .hoe.h2 .press { opacity: 0; pointer-events: none; }
+
+/* ── 지면(세로로 내려 읽기) ── */
+.scroll { position: absolute; inset: 0; z-index: 2; overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; }
+.intro .scroll { overflow: hidden; }
+.paper { position: relative; min-height: 100%; padding: 12px 16px 170px; background: var(--pp);
+  background-image: radial-gradient(120% 70% at 50% 0, rgba(255,255,255,.35), transparent 60%), radial-gradient(140% 100% at 50% 50%, transparent 60%, rgba(150,120,70,.16));
+  transform-origin: 50% 0; will-change: transform; }
+body.gm-playing .paper { padding-bottom: 60px; }
+
+/* 처음 흐름: intro → h1 떨어짐 → h2 펼침 → h3 號外 → h4·h5 제목 → h6 세로 부제 → h7 월 5만원 */
+.intro .paper { height: 100vh; height: 100dvh; overflow: hidden; clip-path: inset(0 0 50% 0); transform: translateY(-120vh) scale(.54) rotate(-9deg); }
+.intro.h1 .paper { transform: translateY(26vh) scale(.54) rotate(-4deg); transition: transform .5s cubic-bezier(.55, 0, .95, .5); }
+.intro.h2 .paper { clip-path: inset(0 0 0 0); transform: none; transition: transform .75s cubic-bezier(.2, .9, .25, 1), clip-path .55s cubic-bezier(.3, .7, .3, 1); }
+.paper::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 100vh; height: 100dvh; box-shadow: 0 30px 60px rgba(0,0,0,.6); z-index: 3; pointer-events: none; opacity: 0; transition: opacity .7s;
+  background: linear-gradient(180deg, transparent 46%, rgba(0,0,0,.28) 50%, rgba(255,255,255,.25) 51%, transparent 56%); }
+.intro:not(.h2) .paper::before { opacity: 1; }
+
+.folio { margin: 0; display: flex; gap: 10px; font: 11px/1 var(--serif); letter-spacing: .02em; color: rgba(20,20,20,.7); padding: 4px 0 0; }
+.folio span + span::before { content: "·"; margin-right: 10px; }
+.mast { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; margin-top: 10px; padding-bottom: 9px; border-bottom: 6px double var(--ink); }
+.mast-n { margin: 0; font: 400 clamp(38px, 11.4vw, 50px)/1 "SM", var(--serif); letter-spacing: -.02em; }
+.mast-d { margin: 0; font: 12px/1.5 var(--serif); text-align: right; }
+
+.ho { position: absolute; z-index: 4; right: 12px; top: 98px; width: 92px; height: 92px; border: 6px solid var(--red); border-radius: 50%; color: var(--red);
+  display: grid; place-items: center; transform: rotate(-12deg); mix-blend-mode: multiply; transition: transform .32s cubic-bezier(.3, 1.7, .5, 1), opacity .12s; }
+.ho span { font: 900 35px/1 "HOE", "Noto Serif KR", "Batang", serif; letter-spacing: -.08em; writing-mode: horizontal-tb; }
+.ho::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(200,16,46,.35); filter: blur(.6px); }
+.intro:not(.h3) .ho { opacity: 0; transform: scale(3.2) rotate(-40deg); }
+.hoe.h3.intro .ho { animation: ink .5s ease-out .2s both; }
+@keyframes ink { from { filter: blur(1.4px); } to { filter: none; } }
+
+.head { margin: 14px 0 0; font: 400 clamp(38px, 12.6vw, 56px)/1.1 var(--serif); letter-spacing: -.06em; padding-right: 64px; }
+.head span { display: block; transition: opacity .35s, transform .45s cubic-bezier(.2, 1.2, .4, 1), filter .4s; }
+.head .l2 { margin-right: -64px; }
+.intro:not(.h4) .head .l1, .intro:not(.h5) .head .l2 { opacity: 0; transform: scale(1.18) translateY(-6px); filter: blur(7px); }
+
+.lead { position: relative; display: grid; grid-template-columns: 1fr 66px; gap: 12px; margin-top: 14px; }
+.pic { margin: 0; min-width: 0; }
+.pic svg { display: block; width: 100%; height: clamp(150px, 29vh, 290px); background: var(--ink); }
+.pic .svt { font-family: var(--serif); }
+.pic .pro { transform-box: fill-box; }
+.pic figcaption { margin-top: 7px; font: 12.5px/1.4 var(--serif); }
+.side { position: relative; display: flex; flex-direction: column; align-items: center; }
+.vert { margin: 0; writing-mode: vertical-rl; font: 400 clamp(26px, 4.6vh, 38px)/1 var(--serif); color: var(--red); letter-spacing: .06em; border-left: 2px solid var(--ink); padding-left: 10px;
+  transition: clip-path .7s cubic-bezier(.3, .8, .3, 1); clip-path: inset(0 0 0 0); }
+.intro:not(.h6) .vert { clip-path: inset(0 0 100% 0); }
+.rules { display: block; width: 52px; flex: 1; min-height: 30px; margin-top: 12px; background: repeating-linear-gradient(rgba(20,20,20,.28) 0 2px, transparent 2px 13px); }
+.price { position: absolute; z-index: 3; right: -4px; bottom: 30px; margin: 0; background: var(--red); color: #FFF8EC; padding: 10px 16px 9px; text-align: center; transform: rotate(3deg);
+  box-shadow: 4px 4px 0 var(--ink); transition: transform .38s cubic-bezier(.3, 1.6, .5, 1), opacity .15s; }
+.price b { display: block; font: 400 clamp(34px, 10vw, 42px)/1 var(--serif); letter-spacing: -.04em; }
+.price small { display: block; margin-top: 4px; font: 700 12.5px/1 var(--gm-sans); opacity: .95; }
+.intro:not(.h7) .price { opacity: 0; transform: rotate(16deg) scale(2); }
+
+.crease { height: 1px; margin: 34px -16px 0; background: linear-gradient(90deg, transparent, rgba(0,0,0,.18) 20%, rgba(0,0,0,.18) 80%, transparent); box-shadow: 0 1px 0 rgba(255,255,255,.5); }
+
+/* ── 오려 쓰는 쿠폰 ── */
+.cp-wrap { margin-top: 22px; }
+.cp-kick { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font: 400 15px/1 var(--serif); }
+.cp-kick span { background: var(--ink); color: var(--pp); padding: 6px 10px 5px; }
+.cp-kick i { flex: 1; height: 13px; background: repeating-linear-gradient(rgba(20,20,20,.3) 0 2px, transparent 2px 5px); }
+.cp-box { position: relative; }
+.hole { position: absolute; inset: 0; background: #2A2622; box-shadow: inset 0 6px 14px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.5); opacity: 0; transition: opacity .25s; }
+.hole.on { opacity: 1; }
+.coupon { position: relative; z-index: 1; padding: 16px 14px 12px; border: 2.5px dashed rgba(20,20,20,.85); background: var(--pp);
+  background-image: linear-gradient(rgba(255,255,255,.28), rgba(255,255,255,.28)); transition: transform .7s cubic-bezier(.2, 1.3, .35, 1), box-shadow .7s, border-color .2s; }
+.coupon.cut { border-color: transparent; transform: translate(-4px, -30px) rotate(-3.5deg) scale(1.02); box-shadow: 0 26px 50px rgba(0,0,0,.45), 0 2px 0 rgba(0,0,0,.2); }
+.coupon.cut .cutsvg { opacity: 0; }
+.cutsvg { position: absolute; left: -2.5px; top: -2.5px; width: calc(100% + 5px); height: calc(100% + 5px); overflow: visible; pointer-events: none; transition: opacity .3s; }
+.cutsvg path { fill: none; stroke: var(--ink); stroke-width: 2.6; }
+.scis { position: absolute; z-index: 5; left: -2px; top: -2px; width: 46px; height: 32px; margin: -16px 0 0 -23px; pointer-events: none; transform-origin: 23px 16px; transform: translate(0, 0); }
+.scis svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 2px 2px rgba(0,0,0,.3)); }
+.scis .bl path { fill: #2E2E2E; stroke: #111; stroke-width: .6; }
+.scis .bl .arm { fill: none; stroke: var(--red); stroke-width: 3.4; stroke-linecap: round; }
+.scis .bl circle { fill: none; stroke: var(--red); stroke-width: 3.2; }
+.scis .pin { fill: #DDD; }
+.scis .bl { transition: transform .07s; }
+.scis .a { transform: rotate(-13deg); } .scis .b { transform: rotate(13deg); }
+.scis.snap .a, .scis.snap .b { transform: none; }
+.coupon.cut .scis, .coupon:not(.cutting) .scis.done { opacity: 0; }
+
+.cp-h { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 4px 10px; padding-bottom: 11px; border-bottom: 2px solid var(--ink); }
+.cp-tag { grid-row: span 2; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: var(--red); color: #FFF8EC; font: 400 14px/1.1 var(--serif); text-align: center; padding: 6px; transform: rotate(-8deg); }
+.cp-h b { font: 400 21px/1.2 var(--serif); letter-spacing: -.04em; }
+.cp-no { font: 11px/1 var(--serif); opacity: .65; letter-spacing: .04em; }
+
+.q { position: relative; padding: 13px 0 12px; border-bottom: 1px solid rgba(20,20,20,.35); transition: opacity .3s; }
+.q.wait { opacity: .34; }
+.q.wait .ck { pointer-events: none; }
+.q.act::before { content: ""; position: absolute; left: -14px; top: 12px; bottom: 12px; width: 4px; background: var(--red); }
+.qt { display: flex; align-items: baseline; gap: 8px; margin: 0 0 9px; font: 400 18px/1.35 var(--serif); letter-spacing: -.03em; }
+.qt i { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--ink); font: 400 13px/1 var(--serif); font-style: normal; transform: translateY(-1px); }
+.q.act .qt i { background: var(--red); border-color: var(--red); color: #FFF8EC; }
+.opts { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.opts.sm { margin-top: 4px; gap: 2px 16px; }
+.ck { position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 4px 4px 4px 0; border: 0; background: none; color: var(--ink); text-align: left; transition: opacity .3s; }
+.bx { position: relative; flex: none; width: 21px; height: 21px; border: 2px solid var(--ink); background: rgba(255,255,255,.35); }
+.bx svg { position: absolute; left: -3px; top: -9px; width: 30px; height: 30px; overflow: visible; }
+.bx path, .ring path { fill: none; stroke: var(--pen); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.ring { position: absolute; left: -10px; right: -10px; top: -7px; bottom: -7px; width: calc(100% + 20px); height: calc(100% + 14px); overflow: visible; pointer-events: none; }
+.ring path { stroke-width: 2.2; vector-effect: non-scaling-stroke; }
+.lb { position: relative; font: 700 15.5px/1.25 var(--gm-sans); letter-spacing: -.02em; }
+.lb small { display: block; font-size: 12px; font-weight: 600; opacity: .65; margin-top: 1px; }
+.opts.sm .lb { font-size: 13.5px; font-weight: 600; }
+.opts.sm .bx { width: 17px; height: 17px; }
+.ck.on .bx path { stroke-dashoffset: 0; transition: stroke-dashoffset .28s cubic-bezier(.4, 0, .2, 1); }
+.ck.on .ring path { stroke-dashoffset: 0; transition: stroke-dashoffset .5s cubic-bezier(.4, 0, .3, 1) .2s; }
+.q.done .ck:not(.on) { opacity: .38; }
+.q.done .ck { pointer-events: none; }
+.skipnote { position: absolute; right: 2px; top: 50%; margin: 0; transform: translateY(-50%) rotate(-6deg); font: 400 22px/1 "YS", var(--serif); color: var(--pen); opacity: 0; transition: opacity .3s .35s; }
+.q.skip { opacity: 1; }
+.q.skip > .qt, .q.skip > .opts { opacity: .3; }
+.q.skip::after { content: ""; position: absolute; left: -4px; right: -4px; top: 50%; height: 3px; background: var(--pen); border-radius: 2px; transform: rotate(-4deg) scaleX(0); transform-origin: 0 50%;
+  animation: strike .35s cubic-bezier(.4, 0, .3, 1) forwards; }
+.q.skip .skipnote { opacity: 1; }
+@keyframes strike { to { transform: rotate(-4deg) scaleX(1); } }
+.cp-f { margin: 10px 0 0; text-align: center; font: 12px/1 var(--serif); opacity: .6; letter-spacing: .02em; }
+
+/* 지면 아래 가림(하단 단추·법정 표기 자리) */
+.foot-fade { position: absolute; z-index: 4; left: 0; right: 0; bottom: 0; height: 150px; pointer-events: none;
+  background: linear-gradient(rgba(239,231,214,0), rgba(239,231,214,.92) 45%, var(--pp)); transition: opacity .4s; }
+.intro .foot-fade, body.gm-playing .foot-fade { opacity: 0; }
+.intro .gm-legal { color: rgba(255,255,255,.6); }
+
+/* 하단 단추: 빨간 잉크 상자 + 가위 */
+html[data-look="smooth"] .gm-cta { border-radius: 4px; box-shadow: 4px 4px 0 var(--ink), 0 14px 30px rgba(0,0,0,.3); }
+html[data-look="smooth"] .gm-cta b { font-family: var(--serif); font-weight: 400; font-size: 20px; letter-spacing: -.03em; }
+.gm-cta .gm-cta-ar { width: 40px; height: 28px; }
+.gm-cta .gm-cta-ar svg { width: 100%; height: 100%; overflow: visible; }
+.gm-cta .gm-cta-ar path { fill: #FFF8EC; stroke: #FFF8EC; stroke-width: 1.4; stroke-linecap: round; }
+.gm-cta .gm-cta-ar circle { fill: none; stroke: #FFF8EC; stroke-width: 3; }
+
+/* 결과: 오려 낸 신문 쪽지 */
+html[data-look="smooth"] .gm-res-card { border-radius: 2px; border: 2.5px dashed rgba(20,20,20,.8); box-shadow: 0 26px 60px rgba(0,0,0,.45); padding-top: 50px; }
+.gm-res-card::before { content: "택스민 신문 · 오려 낸 쿠폰"; position: absolute; left: 20px; right: 20px; top: 16px; padding-bottom: 7px; border-bottom: 4px double var(--ink); font: 400 15px/1 "SM", var(--serif); letter-spacing: -.01em; }
+html[data-look="smooth"] .gm-res-eye { font-family: var(--serif); font-weight: 400; font-size: 25px; letter-spacing: -.05em; color: var(--ink); }
+html[data-look="smooth"] .gm-res-price b { font-family: var(--serif); font-weight: 400; font-size: 40px; color: var(--red); letter-spacing: -.04em; }
+.gm-res-plan { font-family: var(--serif); font-weight: 400; }
+html[data-look="smooth"] .gm-res-inc li { border-radius: 0; border: 1.5px solid var(--ink); font-family: var(--serif); font-weight: 400; }
+html[data-look="smooth"] .gm-btn { border-radius: 4px; }
+.gm-btn.tel { background: var(--ink); color: #FFF8EC; }
+html[data-look="smooth"] .gm-snd { background: rgba(20,20,20,.72); }
+@media (max-height: 700px) { .price { right: 74px; bottom: 34px; } .price b { font-size: 32px; } }
+
+.gm-stage.hoe { overflow: clip; }

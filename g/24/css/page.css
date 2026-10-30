@@ -1,0 +1,158 @@
+/* 24 전단지 — 회색 전봇대에 테이프로 붙은 분홍 전단지(리소 인쇄 파랑·빨강). 놀이: 질문 쪽지가 겹쳐 붙고, 아래 '뜯는 쪽지'를 하나 뜯어 답한다 */
+@font-face { font-family: "DH"; src: url(../fonts/DoHyeon-Regular.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "BHS"; src: url(../fonts/BlackHanSans-Regular.woff2) format("woff2"); font-display: swap; }
+:root {
+  --blue: #2D3FBF; --red: #E8193A; --pink: #F8C9D3; --yel: #FBE38A; --mint: #BFE6D6; --sky: #C9DDF6;
+  --dh: "DH", "Pretendard Variable", Pretendard, sans-serif; --bhs: "BHS", "Pretendard Variable", Pretendard, sans-serif;
+  --gm-cta-bg: var(--blue); --gm-cta-fg: #fff;
+  --gm-res-bg: rgba(40, 38, 36, .55); --gm-card: var(--pink); --gm-card-fg: var(--blue); --gm-or: var(--red);
+  --gm-legal: rgba(255, 255, 255, .78);
+  --fl-top: calc(58px + var(--st)); --fl-bot: calc(126px + var(--sb));
+  color-scheme: light;
+}
+html, body { background: #77736D; }
+.fly { background: linear-gradient(90deg, #7E7A74, #9A968F 30%, #A9A59E 50%, #918D86 75%, #74706A); }
+.fly::after, .fl::after, .gm-res-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .22; mix-blend-mode: multiply; z-index: 6;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.fly::after { z-index: 1; opacity: .3; }
+
+/* ── 거리 · 전봇대 ── */
+.street { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.pole { position: absolute; left: 50%; top: -20px; bottom: -20px; width: 62%; transform: translateX(-50%);
+  background: linear-gradient(90deg, #5F5B55, #A7A299 22%, #D2CEC6 42%, #C4BFB6 55%, #9A958C 74%, #5A5650); box-shadow: 0 0 40px rgba(0,0,0,.35); }
+.pole::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(180deg, transparent 0 120px, rgba(0,0,0,.06) 120px 122px); }
+.band { position: absolute; left: -3px; right: -3px; height: 22px; background: linear-gradient(90deg, #3E3B37, #8D8880 40%, #B5B0A6 52%, #6E6A63 75%, #34312D); box-shadow: 0 3px 6px rgba(0,0,0,.3); }
+.band.b1 { top: 22px; } .band.b2 { bottom: 70px; }
+.staple { position: absolute; width: 14px; height: 3px; background: #6B6B6B; box-shadow: 0 1px 0 rgba(255,255,255,.4); }
+.s1 { left: 22%; top: 34%; transform: rotate(-20deg); } .s2 { left: 70%; top: 52%; transform: rotate(12deg); } .s3 { left: 35%; top: 74%; transform: rotate(4deg); }
+.old { position: absolute; background: #E8E2D2; opacity: .6; clip-path: polygon(0 0, 100% 4%, 96% 100%, 70% 92%, 40% 100%, 6% 94%); }
+.o1 { left: 24%; top: 10px; width: 42%; height: 90px; transform: rotate(-5deg); }
+.o2 { right: 18%; bottom: 40px; width: 40%; height: 120px; transform: rotate(7deg); background: #CFE3F2; }
+.o3 { left: 20%; top: 46%; width: 18%; height: 60px; transform: rotate(-12deg); background: #F6E7A6; }
+
+/* ── 전단지 ── */
+.stack { position: absolute; inset: 0; z-index: 2; perspective: 1200px; }
+.fl { position: absolute; left: 50%; top: var(--fl-top); bottom: var(--fl-bot); width: min(calc(100% - 30px), 380px); margin-left: calc(min(calc(100% - 30px), 380px) / -2);
+  display: flex; flex-direction: column; background: var(--pink); color: var(--blue); box-shadow: 0 22px 40px rgba(0,0,0,.35), 0 2px 0 rgba(0,0,0,.08);
+  transform: rotate(-2deg); transform-origin: 50% 0; }
+.fl.main { padding: 26px 22px 0; }
+.tape { position: absolute; z-index: 7; top: -16px; width: 92px; height: 34px; background: rgba(255, 255, 240, .62); box-shadow: 0 2px 6px rgba(0,0,0,.12);
+  clip-path: polygon(3% 0, 97% 6%, 100% 40%, 96% 100%, 2% 94%, 0 50%); transition: transform .18s cubic-bezier(.3, 1.8, .5, 1), opacity .1s; }
+.t1 { left: 18px; transform: rotate(-8deg); } .t2 { right: 18px; transform: rotate(7deg); }
+.fl-top { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 1vh; padding-bottom: 12px; }
+.fl-top p { margin: 0; mix-blend-mode: multiply; }
+.wan { position: relative; align-self: flex-start; font: 400 clamp(36px, 11.4vw, 48px)/1 var(--dh); letter-spacing: -.02em; }
+.wan .mark { position: absolute; left: -10px; right: -10px; top: 46%; height: 12px; background: var(--red); border-radius: 8px; transform: rotate(-4deg) scaleX(1); transform-origin: 0 50%; mix-blend-mode: multiply;
+  transition: transform .42s cubic-bezier(.6, 0, .3, 1); }
+.got { font: 400 clamp(40px, 13.4vw, 62px)/1 var(--bhs); color: var(--red); letter-spacing: -.05em; text-shadow: 2px 1px 0 rgba(45, 63, 191, .18); transition: transform .34s cubic-bezier(.3, 1.7, .5, 1), opacity .12s; }
+.pr { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 8px; white-space: nowrap; transition: transform .4s cubic-bezier(.3, 1.5, .5, 1), opacity .2s; }
+.pr b { font: 400 clamp(36px, 11.6vw, 52px)/1.05 var(--dh); letter-spacing: -.02em; text-shadow: -1.5px 1px 0 rgba(232, 25, 58, .2); }
+.pr small { font: 400 15px/1 var(--dh); }
+
+/* 처음 흐름 */
+.intro .fl.main { transform: translate(130%, -40%) rotate(28deg); }
+.intro.h1 .fl.main { animation: flutter-in .95s cubic-bezier(.25, .8, .3, 1) forwards; }
+@keyframes flutter-in {
+  0% { transform: translate(130%, -40%) rotate(28deg) rotateY(0); }
+  45% { transform: translate(-6%, 2%) rotate(-8deg) rotateY(26deg) rotateX(8deg); }
+  70% { transform: translate(2%, -1%) rotate(1deg) rotateY(-12deg) rotateX(-4deg); }
+  86% { transform: translate(0, 0) rotate(-3deg) rotateY(5deg); }
+  100% { transform: rotate(-2deg); }
+}
+.intro:not(.h2) .main .t1, .intro:not(.h3) .main .t2 { opacity: 0; transform: translateY(-30px) scale(1.4) rotate(-20deg); }
+.intro:not(.h4) .wan .mark { transform: rotate(-4deg) scaleX(0); }
+.intro:not(.h5) .got { opacity: 0; transform: scale(1.8) rotate(-6deg); }
+.intro:not(.h6) .pr { opacity: 0; transform: translateY(16px) scale(.9); }
+
+/* ── 뜯는 쪽지 ── */
+.tabs { flex: none; display: flex; height: clamp(150px, 33vh, 290px); margin: 0 -22px; padding: 0; list-style: none; border-top: 3px dashed rgba(45, 63, 191, .62); }
+.qf .tabs { margin: 0; }
+.tabs li { position: relative; flex: 1 1 0; min-width: 0; border-right: 2.5px dashed rgba(45, 63, 191, .5); }
+.tabs li:last-child { border-right: 0; }
+.tabs li.sm { flex: .72 1 0; }
+.tabs li.wide { flex: 1.25 1 0; }
+.tabs li::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12px; background: var(--paper, var(--pink)); } /* 뜯긴 자리 남는 조각 */
+.tab { position: absolute; inset: 0; width: 100%; display: flex; align-items: center; justify-content: center; padding: 10px 0; border: 0; background: var(--paper, var(--pink)); color: var(--blue);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); touch-action: manipulation; }
+.tab span { text-align: center; writing-mode: vertical-rl; text-orientation: upright; font: 400 clamp(17px, 5.4vw, 22px)/1.15 var(--dh); letter-spacing: .02em; white-space: nowrap; mix-blend-mode: multiply; }
+.tab small { font-size: .72em; opacity: .8; }
+.tabs.two .tab span { font-size: clamp(24px, 7.6vw, 32px); }
+.tabs li.sm .tab span { font-size: clamp(14px, 4.2vw, 17px); }
+.tab:active { filter: brightness(.96); }
+.tabs li.gone .tab { visibility: hidden; }
+.tabs li.gone::before, .tabs li.torn::before { background: var(--paper, var(--pink)); clip-path: polygon(0 0, 100% 0, 100% 55%, 88% 100%, 74% 40%, 60% 95%, 46% 35%, 30% 100%, 16% 45%, 0 90%); }
+.tabs li.gone, .tabs li.torn { border-right-color: transparent; }
+.tabs li.gone + li, .tabs li.torn + li { border-left: 0; }
+.deco .tab { cursor: pointer; }
+.tab.pull { transition: transform .12s; transform: translateY(5px) rotate(2deg); }
+
+/* ── 질문 쪽지 ── */
+.qf { padding: 22px 0 0; }
+.qf.c1 { --paper: var(--yel); background: var(--yel); transform: rotate(1.6deg) translate(4px, 6px); }
+.qf.c2 { --paper: var(--mint); background: var(--mint); transform: rotate(-1.2deg) translate(-5px, 10px); }
+.qf.c3 { --paper: var(--sky); background: var(--sky); transform: rotate(2.2deg) translate(3px, 14px); }
+.fl.main { --paper: var(--pink); }
+.qh { padding: 0 20px; display: flex; flex-direction: column; gap: 8px; }
+.qn { align-self: flex-start; font: 400 15px/1 var(--bhs); color: #fff; background: var(--red); padding: 6px 10px 5px; transform: rotate(-3deg); mix-blend-mode: multiply; }
+.qq { margin: 0; font: 400 clamp(30px, 9.4vw, 40px)/1.12 var(--bhs); color: var(--blue); letter-spacing: -.04em; mix-blend-mode: multiply; }
+.qq.sm { font-size: clamp(25px, 7.6vw, 32px); }
+.art { flex: 1; min-height: 0; width: 100%; padding: 8px 24px; }
+.art .ib > * { fill: var(--blue); mix-blend-mode: multiply; opacity: .85; }
+.art .ib .r, .art .r { fill: var(--red); }
+.art .ln { fill: none; stroke: var(--red); stroke-width: 5; stroke-linecap: round; mix-blend-mode: multiply; }
+.qf.slap { animation: slap .7s cubic-bezier(.25, .8, .3, 1) both; }
+.qf.c2.slap { animation-name: slap2; } .qf.c3.slap { animation-name: slap3; }
+@keyframes slap { 0% { transform: translate(-120%, -30%) rotate(-30deg); } 55% { transform: translate(3%, 2%) rotate(5deg) rotateY(-18deg); } 80% { transform: rotate(.6deg) translate(4px, 6px) rotateY(6deg); } 100% { transform: rotate(1.6deg) translate(4px, 6px); } }
+@keyframes slap2 { 0% { transform: translate(120%, -40%) rotate(32deg); } 55% { transform: translate(-4%, 3%) rotate(-5deg) rotateY(18deg); } 80% { transform: rotate(-.2deg) translate(-5px, 10px) rotateY(-6deg); } 100% { transform: rotate(-1.2deg) translate(-5px, 10px); } }
+@keyframes slap3 { 0% { transform: translate(-10%, -130%) rotate(-24deg); } 55% { transform: translate(2%, 4%) rotate(5deg) rotateX(-16deg); } 80% { transform: rotate(1.2deg) translate(3px, 14px) rotateX(5deg); } 100% { transform: rotate(2.2deg) translate(3px, 14px); } }
+.qf.slap .tape { animation: tape .3s cubic-bezier(.3, 1.8, .5, 1) .55s both; }
+.qf.slap .t2 { animation-delay: .72s; }
+@keyframes tape { from { opacity: 0; transform: translateY(-24px) scale(1.4) rotate(-18deg); } }
+.qf.away { transition: transform .5s cubic-bezier(.5, 0, .8, .4), opacity .5s; transform: translate(0, 120%) rotate(18deg); opacity: 0; }
+
+/* 뜯겨 날아가는 쪽지 */
+.flyaway { position: absolute; z-index: 30; pointer-events: none; display: flex; align-items: center; justify-content: center; color: var(--blue); box-shadow: 0 10px 18px rgba(0,0,0,.25);
+  clip-path: polygon(0 10px, 12% 0, 26% 9px, 40% 1px, 55% 10px, 70% 0, 85% 8px, 100% 2px, 100% 100%, 0 100%); }
+.flyaway span { text-align: center; writing-mode: vertical-rl; text-orientation: upright; font: 400 20px/1.15 var(--dh); white-space: nowrap; mix-blend-mode: multiply; }
+.flyaway small { font-size: .72em; opacity: .8; }
+
+/* ── 사장님 손 ── */
+.hand { position: absolute; z-index: 25; left: 50%; bottom: -10px; width: 210px; height: 450px; margin-left: -105px; pointer-events: none; transform: translateY(110%); transition: transform .8s cubic-bezier(.2, 1.1, .3, 1); }
+.hand.on { transform: translateY(0) rotate(-4deg); }
+.hand .hd { position: absolute; left: 0; bottom: 0; width: 210px; height: 273px; overflow: visible; filter: drop-shadow(0 10px 20px rgba(0,0,0,.3)); }
+.hand .sleeve { fill: #2B3A63; } .hand .cuff { fill: #E9E4D8; } .hand .skin { fill: #E7B08D; stroke: #B97E5C; stroke-width: 2; } .hand .line { fill: none; stroke: #C48963; stroke-width: 2.2; stroke-linecap: round; }
+.hand .slip { position: absolute; left: 76px; bottom: 192px; width: 62px; height: 250px; background: var(--pink); display: flex; align-items: center; justify-content: center; color: var(--blue);
+  transform: rotate(6deg); box-shadow: 0 6px 14px rgba(0,0,0,.2); clip-path: polygon(0 10px, 14% 0, 30% 9px, 46% 1px, 62% 10px, 78% 0, 100% 8px, 100% 100%, 0 100%); }
+.hand .slip span { writing-mode: vertical-rl; text-orientation: upright; font: 400 22px/1.05 var(--dh); white-space: nowrap; }
+
+/* 하단 단추: 파란 리소 잉크 + 쪽지 */
+html[data-look="smooth"] .gm-cta { border-radius: 6px; box-shadow: 3px 4px 0 rgba(232, 25, 58, .85), 0 14px 30px rgba(0,0,0,.3); }
+html[data-look="smooth"] .gm-cta b { font-family: var(--dh); font-weight: 400; font-size: 22px; letter-spacing: 0; }
+.gm-cta .gm-cta-ar { width: 22px; height: 30px; transform-origin: 50% 0; }
+.gm-cta .gm-cta-ar svg { width: 100%; height: 100%; display: block; }
+.gm-cta .gm-cta-ar path { fill: var(--pink); }
+html[data-look="smooth"] .gm-cta .gm-cta-ar { animation: sway 1.6s ease-in-out infinite; }
+@keyframes sway { 50% { transform: rotate(8deg); } }
+
+/* 결과: 분홍 전단지 */
+html[data-look="smooth"] .gm-res-card { border-radius: 0; transform: rotate(-1deg); padding-top: 30px; box-shadow: 0 26px 60px rgba(0,0,0,.4); }
+.gm-res.on .gm-res-card { transform: rotate(-1deg); }
+.gm-res-card::before { content: ""; position: absolute; left: 50%; top: -14px; width: 110px; height: 32px; margin-left: -55px; background: rgba(255, 255, 240, .7); transform: rotate(-3deg); box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+html[data-look="smooth"] .gm-res-eye { font-family: var(--bhs); font-weight: 400; font-size: 30px; color: var(--red); letter-spacing: -.04em; }
+.gm-res-plan { font-family: var(--dh); font-weight: 400; font-size: 17px; }
+html[data-look="smooth"] .gm-res-price b { font-family: var(--dh); font-weight: 400; font-size: 44px; letter-spacing: -.01em; }
+html[data-look="smooth"] .gm-res-inc li { border-radius: 0; border: 2px dashed currentColor; font-family: var(--dh); font-weight: 400; font-size: 15px; }
+html[data-look="smooth"] .gm-btn { border-radius: 4px; }
+.gm-btn.tel { background: var(--blue); color: #fff; }
+.gm-res-why, .gm-res-note { color: #24307F; }
+html[data-look="smooth"] .gm-snd { background: rgba(30, 30, 30, .55); }
+.fl[hidden] { display: none; }
+.take { align-self: flex-end; display: flex; align-items: flex-end; gap: 4px; margin-top: 1.4vh !important; font: 400 clamp(18px, 5.6vw, 24px)/1 var(--dh); color: var(--red); transform: rotate(-5deg); transition: opacity .3s .3s; }
+.take svg { width: 18px; height: 34px; overflow: visible; }
+.take path { fill: none; stroke: var(--red); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.intro:not(.h6) .take { opacity: 0; }
+.deco .tab span { font-size: clamp(17px, 5.2vw, 22px); line-height: 1.2; }
+@media (max-height: 700px) { .fl-top { gap: 4px; } .take { margin-top: 2px !important; } }
+
+/* 날아가는 쪽지·손이 무대 밖으로 나가도 화면이 밀리지 않게 */
+.gm-stage.fly { overflow: clip; }

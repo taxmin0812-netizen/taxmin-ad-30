@@ -1,0 +1,83 @@
+/* 이야기형 시안(69~73) 공통 — 시안_합치기.py 가 각 시안의 _page.css 앞에 붙인다. 색은 시안이 토큰으로 바꾼다. */
+:root {
+  --bg: #fff; --ink: #151515; --sub: #5A5E66; --mute: #8E929A; --line: #E6E7EA; --acc: #151515; --acc-fg: #fff; --soft: #F4F5F7;
+  --gm-or: var(--acc); --gm-or-d: var(--acc); --gm-ink: var(--ink); --gm-cta-bg: var(--ink);
+  --gm-res-bg: rgba(10, 12, 16, .55); --gm-card: #fff; --gm-card-fg: var(--ink); --gm-legal: var(--mute);
+  color-scheme: light;
+}
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); }
+.gm-stage.st { position: static; max-width: none; height: auto; margin: 0; overflow: visible; border-radius: 0; box-shadow: none; padding-bottom: 0; background: none; }
+.gm-snd { display: none !important; }
+.gm-res { position: fixed; }
+.wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding-left: max(22px, env(safe-area-inset-left)); padding-right: max(22px, env(safe-area-inset-right)); }
+.rv { opacity: 0; transform: translateY(16px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+html.shot .rv, html.calm .rv { opacity: 1; transform: none; transition: none; }
+.logo { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 18px; font-weight: 900; letter-spacing: -.04em; }
+.logo img { border-radius: 7px; }
+html[data-look="smooth"] .gm-cta { background: var(--gm-cta-bg); }
+.foot { padding-block: 26px 150px; }
+.foot .gm-legal { position: static; margin: 0; padding: 0; text-align: left; font-size: 12px; color: var(--mute); }
+
+/* 기장료 계산창 */
+.calc { position: fixed; z-index: 80; inset: 0; background: #fff; color: #151515; overflow-y: auto; }
+.calc-in { max-width: 560px; margin: 0 auto; padding: calc(16px + env(safe-area-inset-top)) 22px 40px; }
+.calc-top { display: flex; justify-content: space-between; align-items: center; height: 44px; }
+.calc-st { margin: 0; font-size: 14px; font-weight: 800; color: var(--acc); }
+.calc-x { width: 44px; height: 44px; margin-right: -10px; border: 0; background: none; font-size: 30px; line-height: 1; color: #5A5E66; cursor: pointer; }
+.calc-bar { height: 3px; border-radius: 2px; background: #E6E7EA; overflow: hidden; }
+.calc-bar i { display: block; height: 100%; width: 33%; background: var(--acc); transition: width .35s; }
+.calc-q { margin: 30px 0 0; font-size: clamp(25px, 6.6vw, 31px); font-weight: 800; line-height: 1.32; letter-spacing: -.045em; }
+.calc-s { margin: 8px 0 0; font-size: 15px; color: #5A5E66; line-height: 1.5; }
+.calc-s:empty { display: none; }
+.calc-o { list-style: none; margin: 26px 0 0; padding: 0; border-top: 1px solid #E6E7EA; }
+.calc-o button { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; border: 0; border-bottom: 1px solid #E6E7EA; padding: 19px 2px; background: none; color: #151515; font: inherit; font-size: 18px; font-weight: 700; letter-spacing: -.03em; cursor: pointer; transition: color .15s; }
+.calc-o button small { display: block; margin-top: 3px; font-size: 13.5px; font-weight: 500; color: #8E929A; }
+.calc-o button::after { content: "→"; flex: none; color: #8E929A; }
+.calc-o button:hover, .calc-o button.on, .calc-o button.on::after { color: var(--acc); }
+.calc-m { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.calc-m:empty { display: none; }
+.calc-m button { border: 0; background: none; padding: 6px 0; font: inherit; font-size: 15px; font-weight: 700; color: #5A5E66; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.calc-back { margin-top: 26px; border: 0; background: none; padding: 8px 0; font: inherit; font-size: 15px; font-weight: 700; color: #8E929A; cursor: pointer; }
+body.calc-on { overflow: hidden; }
+
+/* 72 영수증 정리 — 스크롤 모션: 흩어진 영수증 → 매출·매입·카드 세 더미 → 장부철 하나. 장면마다 큰 문장 하나. */
+:root { --bg: #F5F0F2; --ink: #23161C; --sub: #63525A; --mute: #9A8A92; --line: #E6DCE0; --acc: #B4235A; --acc-fg: #fff;
+  --k0: #2E9E6B; --k1: #3D6FD8; --k2: #B4235A; }
+.run { position: relative; height: 340svh; }
+.pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.top { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; height: 60px; padding-top: env(safe-area-inset-top); }
+.hint { margin: 0; font-size: 13px; font-weight: 700; color: var(--mute); transition: opacity .3s; }
+.cap { position: relative; z-index: 3; height: 30svh; }
+.c { position: absolute; left: 0; right: 0; top: 2svh; margin: 0; padding: 0 inherit; font-size: clamp(42px, 12.5vw, 92px); font-weight: 900; line-height: 1.08; letter-spacing: -.065em; opacity: 0; transform: translateY(14px); transition: opacity .45s, transform .45s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.cap .c { padding-left: max(22px, env(safe-area-inset-left)); padding-right: 22px; }
+.c.on { opacity: 1; transform: none; }
+.c2 { color: var(--acc); }
+.field { position: absolute; z-index: 1; left: 0; right: 0; top: 26svh; bottom: 0; }
+.rc { position: absolute; left: 0; top: 0; width: 64px; height: 92px; margin: -46px 0 0 -32px; background: #fff; border-radius: 3px; box-shadow: 0 6px 14px rgba(60, 20, 35, .12);
+  will-change: transform; }
+.rc::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 7px; border-radius: 3px 3px 0 0; background: var(--k); }
+.rc::after { content: ""; position: absolute; left: 10px; right: 10px; top: 20px; height: 44px;
+  background: linear-gradient(#E3D9DE 0 4px, transparent 4px 12px, #E3D9DE 12px 16px, transparent 16px 24px, #E3D9DE 24px 28px, transparent 28px 36px, #B9AAB2 36px 41px, transparent 41px); }
+.rc .zz { position: absolute; left: 0; right: 0; bottom: -5px; height: 6px; background: radial-gradient(circle at 4px 0, #fff 4px, transparent 4.5px) 0 0 / 8px 6px repeat-x; }
+.lb { position: absolute; top: 74%; width: 30%; margin: 0 0 0 -15%; text-align: center; font-size: 16px; font-weight: 900; opacity: 0; transition: opacity .3s; }
+.l0 { left: 20%; color: var(--k0); } .l1 { left: 50%; color: var(--k1); } .l2 { left: 80%; color: var(--k2); }
+.field.sorted .lb { opacity: 1; }
+.bind { position: absolute; left: 50%; top: 48%; width: min(58vw, 260px); height: min(70vw, 310px); margin: calc(min(70vw, 310px) / -2) 0 0 calc(min(58vw, 260px) / -2);
+  border-radius: 10px 18px 18px 10px; background: var(--acc); color: #fff; display: grid; align-content: center; justify-items: center; gap: 4px;
+  box-shadow: inset 14px 0 0 rgba(0,0,0,.18), 0 26px 50px rgba(120, 20, 60, .3); opacity: 0; transform: scale(.7) rotate(-6deg); }
+.bind .bt { font-size: clamp(26px, 7.6vw, 34px); font-weight: 900; letter-spacing: -.05em; }
+.bind .bs { font-size: 15px; font-weight: 800; opacity: .85; }
+.bind i { position: absolute; top: 16px; right: 16px; width: 34px; height: 34px; border-radius: 50%; background: #fff; }
+.bind i::after { content: ""; position: absolute; left: 12px; top: 7px; width: 8px; height: 15px; border: solid var(--acc); border-width: 0 3.5px 3.5px 0; transform: rotate(45deg); }
+
+.h2 { margin: 0; font-size: clamp(36px, 10vw, 66px); font-weight: 900; line-height: 1.12; letter-spacing: -.06em; }
+.next { padding-block: 60px 30px; display: grid; justify-items: start; gap: 14px; }
+.sub { margin: 0; font-size: 17px; line-height: 1.6; color: var(--sub); font-weight: 600; }
+.go { display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; height: 60px; padding: 0 28px; border-radius: 999px; background: var(--acc); color: #fff; font-size: 18px; font-weight: 800; text-decoration: none; letter-spacing: -.03em; }
+.go i { font-style: normal; }
+.pr { margin: 0; font-size: 13px; line-height: 1.6; color: var(--mute); }
+.foot { border-top: 1px solid var(--line); }
+@media (min-width: 900px) { .rc { width: 84px; height: 120px; margin: -60px 0 0 -42px; } .rc::after { top: 26px; } }

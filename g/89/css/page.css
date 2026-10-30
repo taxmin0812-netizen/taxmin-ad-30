@@ -1,0 +1,120 @@
+/* 이야기형 시안(69~73) 공통 — 시안_합치기.py 가 각 시안의 _page.css 앞에 붙인다. 색은 시안이 토큰으로 바꾼다. */
+:root {
+  --bg: #fff; --ink: #151515; --sub: #5A5E66; --mute: #8E929A; --line: #E6E7EA; --acc: #151515; --acc-fg: #fff; --soft: #F4F5F7;
+  --gm-or: var(--acc); --gm-or-d: var(--acc); --gm-ink: var(--ink); --gm-cta-bg: var(--ink);
+  --gm-res-bg: rgba(10, 12, 16, .55); --gm-card: #fff; --gm-card-fg: var(--ink); --gm-legal: var(--mute);
+  color-scheme: light;
+}
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); }
+.gm-stage.st { position: static; max-width: none; height: auto; margin: 0; overflow: visible; border-radius: 0; box-shadow: none; padding-bottom: 0; background: none; }
+.gm-snd { display: none !important; }
+.gm-res { position: fixed; }
+.wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding-left: max(22px, env(safe-area-inset-left)); padding-right: max(22px, env(safe-area-inset-right)); }
+.rv { opacity: 0; transform: translateY(16px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+html.shot .rv, html.calm .rv { opacity: 1; transform: none; transition: none; }
+.logo { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-size: 18px; font-weight: 900; letter-spacing: -.04em; }
+.logo img { border-radius: 7px; }
+html[data-look="smooth"] .gm-cta { background: var(--gm-cta-bg); }
+.foot { padding-block: 26px 150px; }
+.foot .gm-legal { position: static; margin: 0; padding: 0; text-align: left; font-size: 12px; color: var(--mute); }
+
+/* 기장료 계산창 */
+.calc { position: fixed; z-index: 80; inset: 0; background: #fff; color: #151515; overflow-y: auto; }
+.calc-in { max-width: 560px; margin: 0 auto; padding: calc(16px + env(safe-area-inset-top)) 22px 40px; }
+.calc-top { display: flex; justify-content: space-between; align-items: center; height: 44px; }
+.calc-st { margin: 0; font-size: 14px; font-weight: 800; color: var(--acc); }
+.calc-x { width: 44px; height: 44px; margin-right: -10px; border: 0; background: none; font-size: 30px; line-height: 1; color: #5A5E66; cursor: pointer; }
+.calc-bar { height: 3px; border-radius: 2px; background: #E6E7EA; overflow: hidden; }
+.calc-bar i { display: block; height: 100%; width: 33%; background: var(--acc); transition: width .35s; }
+.calc-q { margin: 30px 0 0; font-size: clamp(25px, 6.6vw, 31px); font-weight: 800; line-height: 1.32; letter-spacing: -.045em; }
+.calc-s { margin: 8px 0 0; font-size: 15px; color: #5A5E66; line-height: 1.5; }
+.calc-s:empty { display: none; }
+.calc-o { list-style: none; margin: 26px 0 0; padding: 0; border-top: 1px solid #E6E7EA; }
+.calc-o button { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; border: 0; border-bottom: 1px solid #E6E7EA; padding: 19px 2px; background: none; color: #151515; font: inherit; font-size: 18px; font-weight: 700; letter-spacing: -.03em; cursor: pointer; transition: color .15s; }
+.calc-o button small { display: block; margin-top: 3px; font-size: 13.5px; font-weight: 500; color: #8E929A; }
+.calc-o button::after { content: "→"; flex: none; color: #8E929A; }
+.calc-o button:hover, .calc-o button.on, .calc-o button.on::after { color: var(--acc); }
+.calc-m { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.calc-m:empty { display: none; }
+.calc-m button { border: 0; background: none; padding: 6px 0; font: inherit; font-size: 15px; font-weight: 700; color: #5A5E66; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.calc-back { margin-top: 26px; border: 0; background: none; padding: 8px 0; font: inherit; font-size: 15px; font-weight: 700; color: #8E929A; cursor: pointer; }
+body.calc-on { overflow: hidden; }
+
+/* 89 레시피 — 요리책 한 쪽. 영수증이 냄비(장부)에 퐁 떨어지고 김이 오름. 재료 점선 · 만드는 법 번호. 미색 종이 · 벽돌빨강 · 올리브 · 고운바탕 + 계량 숫자(Plex Mono) */
+@font-face { font-family: GowunB; src: url(../fonts/GowunBatang-Bold.woff2) format("woff2"); font-display: block; }
+@font-face { font-family: GowunR; src: url(../fonts/GowunBatang-Regular.woff2) format("woff2"); font-display: block; }
+@font-face { font-family: PlexM; src: url(../fonts/IBMPlexMono-Medium.woff2) format("woff2"); font-display: block; }
+:root { --bg: #FBF6EC; --ink: #2A211B; --sub: #5F554B; --mute: #978B7E; --line: #E7DDCB; --acc: #B83A2B; --olive: #6E7A36; --acc-fg: #fff; --gm-cta-bg: #2A211B; }
+.top { display: flex; align-items: center; justify-content: space-between; height: 60px; padding-top: env(safe-area-inset-top); }
+.no { margin: 0; font-family: PlexM, monospace; font-size: 12.5px; letter-spacing: .12em; color: var(--mute); }
+.hero { position: relative; min-height: 100svh; overflow: hidden; padding-bottom: 150px; }
+.cat { margin: 4svh 0 0; font-family: GowunB, serif; font-size: 15px; color: var(--olive); letter-spacing: .04em; }
+.hl { margin: 10px 0 0; font-family: GowunB, serif; font-weight: 400; font-size: clamp(38px, 10.8vw, 86px); line-height: 1.2; letter-spacing: -.05em; }
+.hl em, .h2 em, .big em { font-style: normal; color: var(--acc); }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; padding: 12px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font-family: PlexM, monospace; font-size: 13px; color: var(--sub); max-width: 560px; }
+.pot { position: relative; width: min(70vw, 340px); margin: 5svh auto 0; aspect-ratio: 240 / 210; }
+.bowl { position: absolute; left: 0; bottom: 0; width: 100%; height: auto; }
+.steam { position: absolute; bottom: 62%; width: 7%; height: auto; opacity: .7; animation: steam 2.6s ease-in-out infinite; }
+.s1 { left: 34%; } .s2 { left: 48%; animation-delay: .6s; } .s3 { left: 62%; animation-delay: 1.2s; }
+@keyframes steam { 0% { opacity: 0; transform: translateY(16px) scaleY(.7); } 40% { opacity: .75; } 100% { opacity: 0; transform: translateY(-30px) scaleY(1.1); } }
+.drop { position: absolute; left: 50%; top: 0; width: 15%; aspect-ratio: .7; margin-left: -7.5%; border-radius: 2px; background: #fff; box-shadow: 0 3px 8px rgba(42,33,27,.18);
+  background-image: linear-gradient(#D9CDB8 0 3px, transparent 3px 8px); background-size: 66% 8px; background-repeat: repeat-y; background-position: 50% 6px; animation: drop 2.6s cubic-bezier(.5,0,.8,.5) infinite; }
+@keyframes drop { 0% { transform: translateY(-30px) rotate(-18deg); opacity: 0; } 15% { opacity: 1; } 60% { transform: translateY(105%) rotate(8deg); opacity: 1; } 68%, 100% { transform: translateY(140%) rotate(8deg); opacity: 0; } }
+html.shot .steam, html.calm .steam { animation: none; opacity: .7; } html.shot .drop, html.calm .drop { animation: none; transform: translateY(40%) rotate(-8deg); }
+
+.sc { padding-block: 76px 16px; }
+.h2 { margin: 0; font-family: GowunB, serif; font-weight: 400; font-size: clamp(34px, 9.4vw, 64px); line-height: 1.2; letter-spacing: -.05em; }
+.ing { list-style: none; margin: 22px 0 0; padding: 0; max-width: 560px; }
+.ing li { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; font-size: 19px; font-weight: 700; }
+.ing i { flex: 1; border-bottom: 2px dotted #C9BCA6; transform: translateY(-4px); }
+.ing .q { font-family: PlexM, monospace; font-size: 15px; font-weight: 400; color: var(--acc); }
+.how { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 18px; max-width: 620px; }
+.how li { display: flex; gap: 16px; align-items: flex-start; }
+.how b { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--bg); font-family: PlexM, monospace; font-size: 17px; }
+.how .sm b { background: var(--acc); }
+.how p { margin: 6px 0 0; font-family: GowunR, serif; font-size: 18px; line-height: 1.5; }
+.how small { display: block; margin-top: 4px; font-family: PlexM, monospace; font-size: 12.5px; color: var(--mute); letter-spacing: .06em; }
+.how .sm small { color: var(--acc); }
+.big { margin: 40px 0 0; font-family: GowunB, serif; font-size: clamp(32px, 9vw, 58px); line-height: 1.22; letter-spacing: -.05em; }
+.fin { display: grid; justify-items: start; gap: 18px; padding-block: 80px 40px; }
+.tip { margin: 0 0 16px; padding-left: 16px; border-left: 3px solid var(--olive); font-family: GowunR, serif; font-size: 16px; line-height: 1.6; color: var(--sub); max-width: 560px; }
+.tip b { display: block; font-family: GowunB, serif; font-weight: 400; color: var(--olive); }
+.go { display: inline-flex; align-items: center; gap: 12px; height: 60px; padding: 0 28px; border-radius: 999px; background: var(--acc); color: #fff; font-size: 18px; font-weight: 800; text-decoration: none; letter-spacing: -.03em; }
+.go i { font-style: normal; }
+.pr { margin: 0; font-size: 13px; line-height: 1.6; color: var(--mute); }
+.foot { border-top: 1px solid var(--line); }
+/* PC 두 칸(_새10_PC칸.py) */
+@media (min-width: 900px) {
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: center; column-gap: 56px; padding-left: max(48px, calc((100vw - 1200px) / 2)); padding-right: max(48px, calc((100vw - 1200px) / 2)); }
+  .hero > .top { grid-column: 1 / -1; padding-left: 0; padding-right: 0; max-width: none; }
+  .hero > .wrap { padding: 0; max-width: none; align-self: center; }
+  .hero .hl { margin-top: 0; font-size: 84px !important; }
+  .hero > .pot { margin: 0 auto; align-self: center; }
+}
+/* 실사 첫 화면(_새10_실사첫화면.py) */
+.hero.kh { --kh-acc: #B83A2B; display: flex; flex-direction: column; min-height: 100svh; padding-bottom: 0; overflow: hidden; background: #DCCCBB; color: #2A211B; }
+.kh .top .logo { color: #2A211B; }
+.kh-t { position: relative; z-index: 2; }
+.kh-k { margin: 3svh 0 0; font-size: 15px; font-weight: 800; letter-spacing: -.02em; opacity: .85; }
+.kh .hl { margin: 10px 0 0; line-height: 1.1; font-size: min(17vw, 104px, calc((100vw - 44px) / 5.82)); line-height: 1.08 !important; }
+.kh .hl .kl { line-height: inherit; }
+.kh .hl .kl { display: block; animation: kh-up .8s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(.15s + var(--l) * .12s); }
+.kh-pr { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; margin: 14px 0 0; font-weight: 900; letter-spacing: -.06em; line-height: 1; animation: kh-up .8s cubic-bezier(.2,.8,.2,1) .6s both; }
+.kh-pr b { font-size: clamp(38px, 11vw, 64px); color: var(--kh-acc); }
+.kh-pr span { font-size: 18px; }
+.kh-pr small { flex-basis: 100%; margin-top: 6px; font-size: 13px; font-weight: 700; letter-spacing: -.02em; opacity: .75; }
+.kh .hl em { font-style: normal; color: var(--kh-acc, var(--acc)); }
+@keyframes kh-up { from { opacity: 0; transform: translateY(22px); } }
+.kh-img { position: relative; margin-top: auto; width: 100%; max-width: 640px; align-self: center; }
+.kh-img img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 26%); mask-image: linear-gradient(to bottom, transparent 0, #000 26%); animation: kh-in 1.4s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes kh-in { from { opacity: 0; transform: scale(1.06); } }
+.chips { position: absolute; left: max(22px, env(safe-area-inset-left)); bottom: 150px; display: grid; gap: 8px; justify-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 10px; border-radius: 999px; background: rgba(255,255,255,.94); color: #17181C; font-size: 14.5px; font-weight: 800; letter-spacing: -.02em;
+  box-shadow: 0 10px 24px -10px rgba(0,0,0,.45); animation: kh-chip .5s cubic-bezier(.3,1.5,.5,1) both; animation-delay: calc(1.1s + var(--c) * .35s); }
+.chip i { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--kh-acc, var(--acc)); color: #fff; font-style: normal; font-size: 12px; }
+@keyframes kh-chip { from { opacity: 0; transform: translateY(10px) scale(.8); } }
+html.shot .kh *, html.calm .kh * { animation: none !important; }
+@media (min-width: 900px) { .hero.kh > .kh-img { grid-column: 2; grid-row: 2; margin: 0; max-width: 600px; } .hero.kh { display: grid; } .chips { bottom: 40px; left: -30px; } .kh-img img { -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent); mask-image: radial-gradient(closest-side, #000 72%, transparent); } }

@@ -1,0 +1,119 @@
+/* 41 형광펜 — 기사 지면을 카메라가 훑고 노란 형광펜·빨간 펜이 긋는다. 명조 제목 + 회색 바탕체 본문, 차가운 회색 책상 */
+@font-face { font-family: "MyeongEB"; src: url(../fonts/NanumMyeongjo-ExtraBold.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Batang"; src: url(../fonts/GowunBatang-Regular.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Pen"; src: url(../fonts/YeonSung-Regular.woff2) format("woff2"); font-display: swap; }
+:root { --ink: #121212; --gray: #8C8C8C; --news: #FBFAF6; --mark: #FFE34D; --pen: #D7261E;
+  --gm-cta-bg: #121212; --gm-legal: rgba(20,20,20,.55); --gm-res-bg: rgba(40,44,48,.55); --gm-card: #FBFAF6; --gm-card-fg: #121212; color-scheme: light; }
+html, body { background: #C9CDD0; }
+body { color: var(--ink); }
+.hl { background: radial-gradient(120% 80% at 50% 30%, #DDE0E2, #BCC1C5 75%); }
+.gm-snd { color: var(--ink) !important; border-color: rgba(0,0,0,.2) !important; background: rgba(255,255,255,.75) !important; }
+.gm-cta b { font-family: MyeongEB, var(--gm-sans) !important; font-weight: 400 !important; letter-spacing: -.02em !important; }
+
+/* 20초 모션: 카메라(.cam 원근) 아래 600px 기사 한 장(.art) */
+.mgv { position: absolute; inset: 0; z-index: 3; overflow: hidden; pointer-events: none; --H: 844px; --W: 390px; --U: 694px; }
+.mgv > * { position: absolute; margin: 0; }
+body.gm-playing .mgv, body.gm-done .mgv { visibility: hidden; }
+.cam { inset: 0; perspective: 1500px; perspective-origin: 50% 42%; }
+.art { position: absolute; left: 0; top: 0; width: 600px; padding: 30px 40px 340px; background: var(--news); color: var(--ink); transform-origin: 0 0; will-change: transform;
+  box-shadow: 0 50px 90px rgba(30,34,38,.28), 0 3px 8px rgba(30,34,38,.12); }
+.art::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0 1px, transparent 1px 3px); }
+.mast { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 3px double var(--ink); font-family: MyeongEB, serif; font-size: 17px; }
+.mast-r { display: flex; align-items: center; gap: 7px; font-family: var(--gm-sans); font-weight: 800; font-size: 15px; letter-spacing: -.02em; }
+.mast-r svg { width: 22px; height: 22px; }
+.kick { margin: 30px 0 12px; font-family: var(--gm-sans); font-weight: 800; font-size: 15px; color: var(--pen); letter-spacing: -.01em; }
+.ln { position: relative; display: inline-block; z-index: 0; white-space: nowrap; }
+.mk { position: absolute; z-index: -1; left: -.08em; right: -.1em; top: .4em; bottom: -.02em; background: var(--mark); mix-blend-mode: multiply;
+  border-radius: .1em .32em .12em .26em; transform-origin: 0 50%; }
+.mk::after { content: ""; position: absolute; right: -.06em; top: .06em; bottom: .04em; width: .14em; border-radius: 50%; background: var(--mark); }
+.head { margin: 0; font-family: MyeongEB, serif; font-weight: 400; font-size: 52px; line-height: 1.24; letter-spacing: -.035em; }
+.deck { position: relative; margin: 20px 0 0; font-family: Batang, serif; font-size: 23px; line-height: 1.5; color: #3A3A3A; letter-spacing: -.02em; }
+.dp { position: relative; display: inline-block; color: var(--ink); font-family: MyeongEB, serif; }
+.dp svg { position: absolute; left: -3%; bottom: -12px; width: 106%; height: 14px; overflow: visible; }
+.by { display: flex; align-items: center; gap: 8px; margin: 16px 0 26px; font-family: var(--gm-sans); font-size: 13px; font-weight: 600; color: #9A9A9A; }
+.by i { width: 3px; height: 3px; border-radius: 50%; background: #B5B5B5; }
+.fig { margin: 0 0 26px; }
+.ht { display: block; width: 100%; height: auto; background: #F7F6F2; }
+.fig figcaption { margin-top: 9px; font-family: Batang, serif; font-size: 14px; color: #A0A0A0; }
+.body { margin: 0 0 18px; font-family: Batang, serif; font-size: 19px; line-height: 1.8; color: var(--gray); text-align: justify; letter-spacing: -.02em; }
+.pq { position: relative; margin: 40px 0 40px; padding: 30px 0 26px; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink);
+  font-family: MyeongEB, serif; font-size: 37px; line-height: 1.32; letter-spacing: -.04em; color: #1B1B1B; }
+.pq::before { content: "“"; position: absolute; left: 0; top: -36px; padding-right: 10px; background: var(--news); font-family: Batang, serif; font-size: 66px; line-height: 1; color: var(--pen); }
+.pp { margin-bottom: 0; }
+.price { position: relative; display: inline-block; white-space: nowrap; color: var(--ink); }
+.circ { position: absolute; left: -22%; top: -42%; width: 144%; height: 190%; overflow: visible; }
+.ul2 { position: absolute; left: -2%; bottom: -10px; width: 104%; height: 12px; overflow: visible; }
+.note { position: absolute; left: 10%; top: 2.75em; display: flex; align-items: flex-start; gap: 2px; font-family: Pen, serif; font-weight: 400; font-size: 23px; line-height: 1; color: var(--pen); white-space: nowrap; transform: rotate(-4deg); transform-origin: 0 0; }
+.note svg { width: 26px; height: 22px; overflow: visible; margin-top: -16px; transform: scaleX(-1) rotate(-20deg); }
+.gap { margin-top: 74px; }
+.ad { position: relative; display: block; margin: 40px 0 36px; padding: 34px 26px 30px; border: 1px solid var(--ink); box-shadow: inset 0 5px 0 var(--news), inset 0 7px 0 var(--ink); text-align: center; }
+.ad-tag { position: absolute; left: -1px; top: -1px; padding: 4px 10px; background: var(--ink); color: #fff; font-family: var(--gm-sans); font-size: 12px; font-weight: 700; }
+.ad-lg { display: block; width: 168px; height: auto; margin: 6px auto 8px; overflow: visible; }
+.ad-p { margin: 0; font-family: MyeongEB, serif; font-size: 84px; line-height: 1.1; letter-spacing: -.05em; color: var(--ink); }
+.ad-p .mk { top: .5em; }
+.ad-v { margin: 6px 0 0; font-family: var(--gm-sans); font-size: 17px; font-weight: 700; color: #6A6A6A; }
+.ad-t { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.18); font-family: MyeongEB, serif; font-size: 25px; letter-spacing: -.03em; color: #2A2A2A; }
+.tail { font-size: 15px; color: #B0B0B0; }
+.prog { left: 0; top: 0; width: 100%; height: 3px; background: var(--pen); transform-origin: 0 50%; z-index: 4; }
+.foot { left: 0; right: 0; bottom: 0; height: 64px; background: linear-gradient(rgba(251,250,246,0), rgba(251,250,246,.94) 55%); z-index: 4; }
+.capcta { display: none; }
+html.sb-shot .gm-cta, html.sb-shot .gm-snd { display: none !important; }
+html.sb-shot .capcta { display: block; left: 10%; right: 10%; top: calc(var(--H) * .8); padding: calc(var(--U) * .021) 0; border-radius: 999px; background: var(--ink); color: #fff; text-align: center;
+  font-size: calc(var(--U) * .027); font-weight: 800; letter-spacing: -.03em; box-shadow: 0 14px 30px rgba(0,0,0,.25); }
+
+/* 놀이: 설문 지면 — 해당하는 줄에 형광펜 */
+.play { position: absolute; z-index: 4; inset: 0; padding: calc(26px + var(--st)) 26px calc(26px + var(--sb)); display: flex; flex-direction: column; overflow: hidden; background: var(--news); }
+.play::before { content: ""; position: absolute; left: 26px; right: 26px; top: calc(66px + var(--st)); border-top: 3px double var(--ink); }
+.play[hidden] { display: none; }
+.pl-top { display: flex; justify-content: space-between; align-items: center; height: 34px; }
+.pl-kick { font-family: MyeongEB, serif; font-size: 17px; }
+.pl-bar { display: flex; gap: 6px; }
+.pl-bar i { width: 26px; height: 6px; border-radius: 3px; background: #E2E0DA; transition: background .3s; }
+.pl-bar i.on { background: var(--mark); box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+.pl-bar i.done { background: var(--ink); }
+.q { margin: 40px 0 6px; font-family: MyeongEB, serif; font-weight: 400; font-size: clamp(30px, 8.6vw, 38px); line-height: 1.25; letter-spacing: -.045em; text-wrap: balance; }
+.hint { margin: 0 0 18px; font-size: 14px; font-weight: 600; color: #9A9A9A; }
+.opts { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(0,0,0,.2); }
+.opts button { width: 100%; display: flex; align-items: baseline; gap: 10px; padding: 19px 2px; border: 0; border-bottom: 1px solid rgba(0,0,0,.14); background: none; text-align: left;
+  font-family: Batang, serif; font-size: 22px; letter-spacing: -.03em; color: #7E7E7E; transition: color .3s; }
+.opts button em { font-style: normal; font-family: var(--gm-sans); font-weight: 800; font-size: 13px; color: var(--pen); width: 24px; flex: none; white-space: nowrap; }
+.opts button span { position: relative; z-index: 0; }
+.opts button .mk { transform: scaleX(0); transition: transform .5s cubic-bezier(.6,.05,.3,1); }
+.opts button small { display: block; margin-top: 4px; font-size: 14px; color: #A5A5A5; }
+.opts button:hover, .opts button:focus-visible { color: #3A3A3A; }
+.opts button.on { color: var(--ink); }
+.opts button.on .mk { transform: scaleX(1); }
+.more { margin: 16px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.more button { align-self: flex-start; border: 0; background: none; padding: 5px 0; font-size: 15px; font-weight: 700; color: #5A5A5A; text-align: left; }
+.more button::before { content: "※ "; color: var(--pen); }
+.more button small { font-weight: 500; margin-left: 4px; color: #9A9A9A; }
+.more button.on { background: linear-gradient(transparent 45%, var(--mark) 45%); color: var(--ink); }
+.texture { margin-top: auto; padding-top: 18px; display: grid; gap: 11px; opacity: .55; }
+.texture i { height: 7px; border-radius: 3px; background: #E4E2DC; }
+.texture i:nth-child(2) { width: 92%; } .texture i:nth-child(4) { width: 96%; } .texture i:nth-child(5) { width: 58%; }
+.again { position: absolute; right: 26px; top: calc(28px + var(--st)); border: 0; background: none; font-size: 13px; font-weight: 700; color: #8A8A8A; text-decoration: underline; text-underline-offset: 3px; padding: 6px 0; margin-right: 110px; }
+.play.out .q, .play.out .opts, .play.out .more, .play.out .hint { opacity: 0; transform: translateY(-40px); transition: opacity .3s, transform .4s cubic-bezier(.6,0,.4,1); }
+.play.in .q, .play.in .hint, .play.in .opts, .play.in .more { animation: scrollin .6s cubic-bezier(.2,.9,.3,1) both; }
+.play.in .hint { animation-delay: .05s; } .play.in .opts { animation-delay: .1s; } .play.in .more { animation-delay: .15s; }
+@keyframes scrollin { from { opacity: 0; transform: translateY(46px); } }
+
+/* 끝: 기사 제목이 나오고 형광펜 */
+.fin { position: absolute; z-index: 6; left: 26px; right: 26px; top: 34%; font-family: MyeongEB, serif; font-size: clamp(34px, 10vw, 44px); line-height: 1.28; letter-spacing: -.045em; color: var(--ink); pointer-events: none; animation: finin .5s ease-out both; }
+.fin .mk { transform: scaleX(0); animation: mkgo .6s .35s cubic-bezier(.6,.05,.3,1) forwards; }
+.fin .ln + br + .ln .mk { animation-delay: .9s; }
+@keyframes mkgo { to { transform: scaleX(1); } }
+@keyframes finin { from { opacity: 0; transform: translateY(20px); } }
+
+/* 결과 카드: 오려 낸 기사 한 조각 */
+.gm-res-card { border-radius: 2px !important; border-top: 4px double var(--ink) !important; box-shadow: 0 30px 70px rgba(20,24,28,.3) !important; background: var(--news) !important; }
+.gm-res-eye { font-family: MyeongEB, var(--gm-sans) !important; font-weight: 400 !important; font-size: 26px !important; letter-spacing: -.04em !important; color: var(--ink) !important;
+  background: linear-gradient(transparent 48%, var(--mark) 48% 92%, transparent 92%); display: inline; }
+.gm-res-price b { font-family: MyeongEB, var(--gm-sans) !important; font-weight: 400 !important; }
+.gm-res-plan { margin-top: 10px !important; }
+
+@media (max-height: 700px) {
+  .q { margin-top: 26px; }
+  .opts button { padding: 12px 2px; font-size: 19px; }
+  .texture { display: none; }
+}

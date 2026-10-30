@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko" data-live-host="taxminlite.kr" data-variant="mini" data-variant-name="미니어처">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>택스민 — 30초 기장료 계산하기</title>
+<meta name="description" content="요금은 가볍게, 관리는 꼼꼼하게. 업종·작년 매출·직원 수만 고르면 우리 가게 예상 기장료와 챙겨 드리는 일을 30초 만에 보여 드립니다. 개인사업자 기장 택스민.">
+<meta name="theme-color" content="#2b2a28">
+<link rel="canonical" href="https://taxminlite.kr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="택스민">
+<meta property="og:url" content="https://taxminlite.kr/">
+<meta property="og:title" content="우리 가게 예상 기장료, 30초면 나와요 — 택스민">
+<meta property="og:description" content="요금은 가볍게, 관리는 꼼꼼하게. 장부 정리부터 인건비 신고까지, 개인사업자 기장 택스민">
+<meta property="og:image" content="https://taxminlite.kr/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="stylesheet" href="fonts/pretendard.css?v=3a4dd8f1">
+<link rel="stylesheet" href="css/lite.css?v=4855c5ce">
+<link rel="stylesheet" href="css/mini.css?v=e6140fb3">
+<script src="js/mini.js?v=f2f0644d" defer></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M12 3.6c-5 0-9 3.1-9 7 0 2.5 1.7 4.7 4.2 5.9l-.9 3.5c-.1.4.4.7.7.4l4.2-2.8h.8c5 0 9-3.1 9-7s-4-7-9-7z" fill="currentColor"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1z" fill="currentColor"/></symbol>
+  <symbol id="i-arr" viewBox="0 0 24 24"><path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-snd-off" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-snd-on" viewBox="0 0 24 24"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18.2 6.4a8 8 0 0 1 0 11.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-chk" viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.8" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 7.5h7M8.5 12h1M12 12h1M15.5 12h0M8.5 15.5h1M12 15.5h1M15.5 15.5h0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-person" viewBox="0 0 40 52"><circle cx="20" cy="12" r="9" fill="currentColor"/><path d="M3 50c0-11 7.6-19 17-19s17 8 17 19z" fill="currentColor"/></symbol>
+  <symbol id="n-book" viewBox="0 0 24 24"><path d="M5 4.5h10.5A3.5 3.5 0 0 1 19 8v11.5H8.5A3.5 3.5 0 0 1 5 16z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 9h6M9 12.5h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="n-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" fill="currentColor"/><circle cx="16.5" cy="9" r="2.6" fill="currentColor" opacity=".55"/><path d="M3 19c0-3.4 2.7-5.8 6-5.8s6 2.4 6 5.8z" fill="currentColor"/><path d="M15.5 13.6c3 .1 5.5 2.2 5.5 5.4h-4.3" fill="currentColor" opacity=".55"/></symbol>
+  <symbol id="n-chart" viewBox="0 0 24 24"><path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="5.5" y="12" width="3" height="6" rx="1" fill="currentColor" opacity=".5"/><rect x="10.5" y="9" width="3" height="9" rx="1" fill="currentColor" opacity=".7"/><rect x="15.5" y="5" width="3" height="13" rx="1" fill="currentColor"/></symbol>
+  <symbol id="n-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="15" r="1.8" fill="currentColor"/></symbol>
+  <symbol id="n-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 20.5a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+</svg>
+<a class="skip" href="#mn-end">본문 바로가기</a>
+<main class="mn" id="mn">
+  <div class="mn-stage" aria-hidden="true">
+    <video class="mn-vid" id="mn-vid" src="img/tower.mp4" poster="img/tower-first.jpg" muted playsinline autoplay preload="auto"></video>
+    <i class="mn-shade"></i><i class="mn-shade-b" id="mn-shade-b"></i><i class="mn-foot" id="mn-foot"></i>
+  </div>
+  <header class="mn-hd">
+    <span class="mn-brand"><img class="mn-mark-s" src="img/favicon.svg" alt="" width="28" height="28"><span>택스민</span></span>
+    <span class="mn-right"><button class="mn-skip" type="button" id="mn-skip">건너뛰기</button><button class="mn-again" type="button" id="mn-again">다시 보기</button></span>
+  </header>
+  <div class="mn-lift" id="mn-lift" aria-hidden="true"><svg class="lf-ch" viewBox="0 0 14 9"><path d="M2,2 7,7 12,2"/></svg><span class="lf-scale"><i></i><i></i><i></i><i></i><i></i><em class="lf-car" id="lf-car"></em></span></div>
+  <div class="mn-caps" id="mn-caps" aria-live="off">
+    <div class="mn-cap mg-cap mn-hook" data-in="0.12" data-out="3.42"><h1 class="mn-h"><span class="ln"><span>장사는 1층에서,</span></span><span class="ln"><span>세금은 <em>지하에서<svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2,7 C22,3.5 48,2.5 98,5"/></svg></em>.</span></span></h1></div>
+    <div class="mn-cap mg-cap" data-in="5.0" data-out="7.7"><h2 class="mn-h"><span class="ln"><span>영수증은 찍어 보내기만,</span></span><span class="ln"><span>장부는 <em>세무사가<svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2,7 C22,3.5 48,2.5 98,5"/></svg></em> 써요.</span></span></h2></div>
+    <div class="mn-cap mg-cap sm" data-in="9.05" data-out="11.88"><h2 class="mn-h"><span class="ln"><span>직원 월급 신고까지</span></span><span class="ln"><span><em>한 번에<svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2,7 C22,3.5 48,2.5 98,5"/></svg></em> 맡기세요.</span></span></h2></div>
+    <div class="mn-cap mg-cap bot" data-in="13.25" data-out="16.08"><h2 class="mn-h"><span class="ln"><span>지난달 장사 <em>성적표<svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2,7 C22,3.5 48,2.5 98,5"/></svg></em>,</span></span><span class="ln"><span>매달 올려 드려요.</span></span></h2></div>
+    <div class="mn-cap mg-cap sm" data-in="17.45" data-out="20.88"><h2 class="mn-h"><span class="ln"><span>신고 날짜는 저희가 챙기고,</span></span><span class="ln"><span>궁금한 건 <em>카톡<svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2,7 C22,3.5 48,2.5 98,5"/></svg></em>으로.</span></span></h2></div>
+  </div>
+  <section class="mn-end" id="mn-end" aria-labelledby="mn-end-h" tabindex="-1">
+    <div class="mn-mark" id="mn-logo-anim" aria-hidden="true"><svg class="lg-svg" viewBox="179.5 103.5 440 440" overflow="visible"><g class="lg-tile"><rect x="179.5" y="103.5" width="440" height="440" rx="96" fill="#FF5B2E"/><path class="lg-s" d="M232.5 396V334.5a38.5 38.5 0 0 1 77 0V396"/><path class="lg-s" d="M309.5 334.5a38 38 0 0 1 76 0V396"/><path class="lg-s" d="M437.5 396V306"/><path class="lg-s" d="M489.5 396V334.5a38.5 38.5 0 0 1 77 0V396"/><circle class="lg-dot" cx="438" cy="255" r="21.5" fill="#17181C"/></g></svg><svg class="lg-word" viewBox="276.0 461.0 251.9 106.9"><path d="M358.00 541.88 L358.88 543.50 L359.25 545.62 L361.25 547.62 L363.88 548.88 L437.00 548.88 L441.38 546.75 L442.88 544.00 L442.88 539.88 L442.62 539.25 L439.62 536.25 L437.00 535.00 L364.88 535.00 L363.38 535.88 L361.50 536.12 L360.38 537.00 L359.12 538.50 L359.00 540.00Z M280.00 535.88 L280.00 539.00 L281.25 541.62 L283.25 543.62 L285.38 544.00 L286.88 544.88 L339.00 544.88 L339.62 545.12 L340.75 546.25 L341.00 546.88 L341.00 560.00 L342.25 562.62 L344.38 564.88 L345.88 565.88 L350.38 565.75 L353.62 562.62 L354.88 560.00 L354.88 545.88 L353.88 544.00 L353.75 541.50 L352.62 539.25 L351.12 537.62 L350.62 536.25 L349.62 535.25 L348.25 534.75 L346.62 533.25 L344.38 532.12 L342.88 532.00 L341.00 531.00 L284.88 531.00 L282.25 532.25 L281.25 533.25Z M450.12 528.50 L450.00 530.00 L449.00 531.88 L449.00 546.00 L450.00 547.88 L450.00 551.00 L452.25 555.62 L453.75 557.25 L454.12 558.38 L455.62 559.12 L457.25 560.62 L461.50 562.75 L521.00 562.88 L521.62 562.62 L524.62 559.62 L525.75 557.38 L525.88 554.88 L524.62 552.25 L523.62 551.25 L521.38 550.12 L519.88 550.00 L518.00 549.00 L464.50 548.88 L463.12 547.62 L462.88 547.00 L462.88 529.88 L462.62 529.25 L459.62 526.25 L457.12 525.00 L455.75 525.00 L454.38 525.88 L452.50 526.12Z M364.00 516.88 L364.00 521.00 L365.25 523.62 L366.25 524.62 L368.88 525.88 L373.00 525.88 L373.62 525.62 L377.62 521.62 L378.12 520.25 L380.62 517.62 L381.12 516.25 L383.62 513.62 L384.12 512.25 L385.62 510.62 L386.12 509.25 L388.62 506.62 L389.12 505.25 L390.62 503.62 L391.12 502.25 L393.62 499.62 L394.12 498.25 L396.62 495.62 L397.12 494.25 L398.62 492.62 L399.38 490.88 L400.12 490.25 L400.75 490.25 L402.75 492.25 L403.25 493.62 L405.75 496.25 L406.25 497.62 L408.75 500.25 L409.25 501.62 L410.75 503.25 L411.25 504.62 L413.75 507.25 L414.25 508.62 L415.75 510.25 L416.25 511.62 L418.75 514.25 L419.25 515.62 L420.75 517.25 L421.25 518.62 L423.75 521.25 L424.25 522.62 L426.25 524.62 L428.88 525.88 L432.00 525.88 L434.62 524.62 L435.88 523.50 L436.88 522.00 L436.88 516.88 L435.62 514.25 L434.12 512.62 L433.62 511.25 L431.12 508.62 L430.62 507.25 L428.12 504.62 L427.62 503.25 L426.12 501.62 L425.62 500.25 L423.12 497.62 L422.62 496.25 L421.12 494.62 L420.62 493.25 L418.12 490.62 L417.62 489.25 L415.12 486.62 L414.62 485.25 L413.12 483.62 L412.62 482.25 L410.12 479.62 L409.62 478.25 L408.12 476.62 L407.62 475.25 L404.62 472.25 L402.00 471.00 L399.88 471.00 L397.25 472.25 L392.25 477.25 L391.75 478.62 L390.25 480.25 L389.75 481.62 L387.25 484.25 L386.75 485.62 L384.25 488.25 L383.75 489.62 L382.25 491.25 L381.75 492.62 L379.25 495.25 L378.75 496.62 L377.25 498.25 L376.75 499.62 L374.25 502.25 L373.75 503.62 L371.25 506.25 L370.75 507.62 L369.25 509.25 L368.75 510.62 L366.25 513.25 L365.75 514.62 L364.25 516.25Z M451.25 467.25 L448.25 470.25 L447.75 471.62 L446.25 473.25 L445.88 475.38 L445.00 476.88 L445.00 511.00 L445.88 512.50 L446.00 514.00 L447.25 516.62 L452.25 521.62 L454.88 522.88 L483.00 522.88 L485.62 521.62 L487.25 520.12 L488.62 519.62 L489.62 518.62 L490.12 517.25 L491.62 515.62 L492.00 513.50 L492.88 512.00 L492.88 475.88 L490.62 471.25 L486.62 467.25 L484.38 466.12 L482.50 465.88 L481.00 465.00 L456.88 465.00 L455.38 465.88 L453.88 466.00Z M459.50 479.00 L478.00 478.88 L478.88 479.50 L479.00 508.00 L478.38 508.88 L459.88 509.00 L459.00 508.38 L458.88 479.88Z M507.88 463.00 L505.50 464.12 L504.00 466.88 L504.00 522.00 L504.25 522.62 L506.25 524.62 L508.50 525.75 L512.00 525.88 L514.62 524.62 L515.62 523.62 L516.88 521.00 L516.88 466.88 L515.88 465.38 L513.38 463.12Z M355.62 466.25 L353.50 464.00 L352.00 463.00 L346.88 463.00 L344.12 464.50 L343.00 466.88 L343.00 487.00 L342.00 488.00 L338.88 488.00 L337.38 487.12 L335.50 486.88 L334.88 486.00 L334.88 467.88 L333.62 465.25 L331.38 463.12 L324.88 463.00 L324.25 463.25 L322.25 465.25 L321.12 467.50 L321.00 468.88 L320.50 469.50 L319.88 468.88 L319.62 467.25 L317.62 465.25 L315.00 464.00 L283.88 464.00 L281.25 465.25 L279.25 467.25 L278.88 469.38 L278.00 470.88 L278.00 516.00 L278.88 517.50 L279.25 519.62 L281.38 521.88 L282.88 522.88 L316.00 522.88 L317.50 521.88 L320.50 518.38 L321.00 519.00 L321.12 520.38 L322.25 522.62 L325.25 525.62 L325.88 525.88 L330.00 525.88 L331.50 524.88 L333.88 522.50 L334.88 521.00 L335.00 501.50 L335.88 500.88 L340.00 500.88 L341.50 500.00 L342.38 500.00 L343.00 500.88 L343.12 522.38 L345.25 524.62 L347.88 525.88 L351.00 525.88 L353.62 524.62 L354.62 523.62 L355.88 521.00 L355.88 466.88Z M320.50 472.38 L321.00 473.00 L320.88 513.25 L320.38 513.62 L320.00 513.50 L319.12 512.62 L318.38 511.12 L316.00 510.00 L314.50 509.88 L313.00 509.00 L292.50 508.88 L291.88 508.00 L291.88 501.88 L292.50 501.00 L308.00 500.88 L309.88 499.88 L312.38 499.75 L315.75 496.38 L315.88 490.88 L314.88 489.38 L312.62 487.25 L312.00 487.00 L292.50 486.88 L291.88 486.00 L292.00 478.50 L292.88 477.88 L314.00 477.88 L318.38 475.75 L319.88 472.88Z" fill="#fff" fill-rule="evenodd"/></svg></div>
+    <h2 id="mn-end-h" class="mn-h"><span class="ln"><span>우리 가게 기장료,</span></span><span class="ln"><span><em>30초<svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2,7 C22,3.5 48,2.5 98,5"/></svg></em>면 나와요.</span></span></h2>
+    <footer class="mn-legal"><p><span class="mn-lg">사무소명 세무회계 민 · 사업자번호 546-54-00533 · 대표자 이민기(세무사)</span> <a class="mn-pv" href="privacy.html">개인정보처리방침</a></p></footer>
+  </section>
+</main>
+<a class="tm-cta" href="#calc" data-calc><svg class="ico tm-ic" aria-hidden="true"><use href="#i-calc"/></svg><span>기장료 계산하고 상담받기</span><svg class="ico tm-ar" aria-hidden="true"><use href="#i-arr"/></svg></a>
+
+<dialog class="calc sheet" id="faq" aria-labelledby="faq-title">
+  <div class="c-box">
+    <div class="c-top"><span class="c-ib" aria-hidden="true"></span><h2 class="sheet-t" id="faq-title">자주 묻는 질문</h2><button class="c-ib" type="button" data-close aria-label="닫기"><svg><use href="#i-x"/></svg></button></div>
+    <div class="c-body">
+      <div class="faqs">
+        <details><summary>요금은 얼마예요?<i aria-hidden="true"><svg><use href="#i-plus"/></svg></i></summary><div><p>직원 3명까지 월 5만원, 4~5명이면 월 6만원이에요(Lite). 작년 매출이 크면 월 7~8만원(Plus), 더 크면 월 12~15만원(성실)이에요. 모두 부가세 별도, 6개월 이용 기준이에요. 장부 정리, 매달 매출 보고서, 부가세 신고, 인건비 신고, 신고 날짜 안내, 카카오톡 상담이 들어 있어요. 5월 종합소득세 신고 비용은 따로이고, 신고 전에 먼저 알려 드려요.</p></div></details>
+        <details><summary>우리 가게는 어느 요금이에요?<i aria-hidden="true"><svg><use href="#i-plus"/></svg></i></summary><div><p>업종과 작년 매출로 정해져요. 월 5~6만원(Lite)은 작년 매출이 도소매·온라인 판매 9억원, 음식점·카페·제조 5억원, 서비스·학원·미용·프리랜서 3억원까지예요. 그보다 크면 월 7~8만원(Plus)이고, 도소매 15억원, 음식점 등 7억 5천만원, 서비스 등 5억원을 넘으면 월 12~15만원(성실)이에요. 올해 시작한 가게는 월 5~6만원이에요.</p></div></details>
+        <details><summary>직원이 6명 이상이면요?<i aria-hidden="true"><svg><use href="#i-plus"/></svg></i></summary><div><p>월 5~6만원 요금은 직원 5명까지예요. 6명부터는 월 7~8만원(Plus)으로 안내해 드려요.</p></div></details>
+        <details><summary>사무실에 직접 가야 하나요?<i aria-hidden="true"><svg><use href="#i-plus"/></svg></i></summary><div><p>아니요. 상담부터 자료 주고받기까지 카카오톡과 전화로 하실 수 있습니다.</p></div></details>
+        <details><summary>법인사업자도 되나요?<i aria-hidden="true"><svg><use href="#i-plus"/></svg></i></summary><div><p>택스민 기장은 개인사업자 요금제입니다. 법인은 법인 기장으로 따로 안내해 드립니다.</p></div></details>
+        <details><summary>해지는 어떻게 하나요?<i aria-hidden="true"><svg><use href="#i-plus"/></svg></i></summary><div><p>해지 조건은 기장계약서를 쓸 때 함께 정합니다.</p></div></details>
+      </div>
+      <a class="btn btn-blue btn-xl sheet-cta" href="#calc" data-calc><svg class="ico" aria-hidden="true"><use href="#i-calc"/></svg>30초 기장료 계산하기</a>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="calc" id="calc" aria-labelledby="c-title">
+  <div class="c-box">
+    <div class="c-top">
+      <button class="c-ib" type="button" id="c-back" aria-label="이전으로"><svg><use href="#i-back"/></svg></button>
+      <ol class="c-dots" id="c-dots" aria-hidden="true"><li></li><li></li><li></li><li></li></ol>
+      <button class="c-ib" type="button" id="c-close" aria-label="닫기"><svg><use href="#i-x"/></svg></button>
+    </div>
+    <div class="c-body" id="c-body">
+      <section class="c-step" data-step="ind">
+        <p class="c-q-n">기장료 계산 1 / 3</p>
+        <h2 id="c-title" class="c-q">어떤 일을 하세요?</h2>
+        <div class="c-opts grid" data-name="ind">
+          <button type="button" data-v="food" data-g="B">음식점 · 카페</button>
+          <button type="button" data-v="retail" data-g="A">도소매 · 온라인 판매</button>
+          <button type="button" data-v="personal" data-g="C">미용 · 네일 · 세탁</button>
+          <button type="button" data-v="edu" data-g="C">학원 · 교습소</button>
+          <button type="button" data-v="free" data-g="C">프리랜서 · 크리에이터</button>
+          <button type="button" data-v="mfg" data-g="B">제조 · 건설 · 운수</button>
+          <button type="button" data-v="it" data-g="B">IT · 소프트웨어</button>
+          <button type="button" data-v="biz" data-g="C">디자인 · 광고 · 컨설팅</button>
+          <button type="button" data-v="rent" data-g="C">부동산 임대</button>
+          <button type="button" data-v="pro" data-g="P">전문직(의료·법률·세무 등)</button>
+          <button type="button" data-v="etc" data-g="?">그 밖의 업종</button>
+          <button type="button" data-v="corp" data-g="X">법인사업자예요</button>
+        </div>
+      </section>
+      <section class="c-step" data-step="rev" hidden>
+        <p class="c-q-n">기장료 계산 2 / 3</p>
+        <h2 class="c-q">작년 매출은 어느 정도예요?</h2>
+        <p class="c-help">대략이면 괜찮아요. 홈택스 ‘매출 조회’에서도 볼 수 있어요.</p>
+        <div class="c-opts list" data-name="rev">
+          <button type="button" data-v="new">올해 시작했어요<small>사업 준비 중 포함</small></button>
+          <button type="button" data-v="r1">3억원 미만</button>
+          <button type="button" data-v="r2">3억원 ~ 5억원</button>
+          <button type="button" data-v="r3">5억원 ~ 9억원</button>
+          <button type="button" data-v="r4">9억원 이상</button>
+          <button type="button" data-v="unk">잘 모르겠어요</button>
+        </div>
+      </section>
+      <section class="c-step" data-step="emp" hidden>
+        <p class="c-q-n">기장료 계산 3 / 3</p>
+        <h2 class="c-q">4대보험 직원은 몇 명이에요?</h2>
+        <p class="c-help">사장님 본인은 빼고 세어 주세요.</p>
+        <div class="c-opts list" data-name="emp">
+          <button type="button" data-v="0">없어요</button>
+          <button type="button" data-v="3">1~3명</button>
+          <button type="button" data-v="5">4~5명</button>
+          <button type="button" data-v="10">6명 이상</button>
+        </div>
+      </section>
+      <section class="c-step c-wait" data-step="wait" hidden>
+        <div class="w-ledger" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <p class="c-q">우리 가게 기장료를<br>계산하고 있어요</p>
+      </section>
+      <section class="c-step c-result" data-step="result" hidden aria-live="polite"><div id="c-result"></div></section>
+      <section class="c-step" data-step="form" hidden>
+        <p class="c-q-n">전화 상담 예약</p>
+        <h2 class="c-q">번호를 남겨 주시면<br>전화드릴게요</h2>
+        <p class="c-pick" id="c-pick"></p>
+        <form id="form" novalidate>
+          <div class="fld"><label for="f-name">이름<em>*</em></label><input id="f-name" name="이름" type="text" autocomplete="name" maxlength="40" required></div>
+          <div class="fld"><label for="f-tel">휴대폰 번호<em>*</em></label><input id="f-tel" name="연락처" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="20" required></div>
+          <div class="fld"><label for="f-msg">전화받기 편한 시간 <span class="opt">(선택)</span></label><textarea id="f-msg" name="남기실 말씀" maxlength="1000" rows="2" placeholder="예) 평일 오후 2시 이후"></textarea></div>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="agree">
+            <label><input type="checkbox" id="f-ok" required><span>[필수] 상담을 위한 개인정보 수집·이용에 동의합니다<em>*</em></span></label>
+            <ul class="agree-list">
+              <li><b>목적</b> 상담 연락, 예상 기장료 안내, 들어온 경로 확인</li>
+              <li><b>항목</b> 이름, 휴대폰 번호, 업종, 작년 매출 구간, 직원 수, 계산 결과, 남기신 말씀, 들어온 경로(광고 매체·광고 번호)</li>
+              <li><b>보관</b> 마지막 상담일부터 1년 뒤 파기(계약하시면 계약·법령에 따른 기간 동안 보관)</li>
+            </ul>
+            <p>동의하지 않으셔도 됩니다. 이 경우 신청서는 접수되지 않지만 카카오톡·전화로 똑같이 상담하실 수 있습니다. <a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>
+          </div>
+          <button class="btn btn-blue btn-xl btn-submit" type="submit">전화 상담 예약하기<svg class="ico" aria-hidden="true"><use href="#i-arr"/></svg></button>
+          <p class="form-msg" id="form-msg" role="alert"></p>
+        </form>
+      </section>
+      <section class="c-step c-done" data-step="done" hidden tabindex="-1">
+        <span class="done-ic" aria-hidden="true"><svg><use href="#i-chk"/></svg></span>
+        <h2 class="c-q">전화 상담 예약이<br>접수되었어요</h2>
+        <p id="done-p">평일 10:00~17:30 사이, 말씀하신 시간에 맞춰 전화드릴게요.<br>먼저 물어보실 게 있으면 카카오톡으로 말씀해 주세요.</p>
+        <a class="btn btn-kakao btn-xl" href="https://pf.kakao.com/_Mxojqs/chat" target="_blank" rel="noopener" data-hit="kakao"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg>카카오톡 상담</a>
+      </section>
+    </div>
+  </div>
+</dialog>
+</body>
+</html>

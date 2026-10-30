@@ -1,0 +1,232 @@
+/* 27 라면 — 노란 햇살 + 빨간 라면 봉지. 놀이: 봉지 뒷면 조리법 1·2·3 → 냄비 → 완성 그릇 */
+@font-face { font-family: "GAS"; src: url(../fonts/GasoekOne-Regular.woff2) format("woff2"); font-display: block; }
+@font-face { font-family: "BHS"; src: url(../fonts/BlackHanSans-Regular.woff2) format("woff2"); font-display: block; }
+:root {
+  --red: #E3001B; --red-d: #8A000F; --red-dd: #5E0009; --yel: #FFD21F; --yel-l: #FFE14A; --brown: #7A3B00;
+  --gm-or: #E3001B; --gm-ink: #2A0A06;
+  --gm-cta-bg: linear-gradient(180deg, #FF2A3A, #C4001A); --gm-cta-fg: #fff;
+  --gm-res-bg: rgba(94, 10, 0, .5); --gm-card: #FFFBF2; --gm-card-fg: #2A0A06;
+  --gm-legal: rgba(110, 50, 0, .82);
+  color-scheme: light;
+}
+html, body { background: #2B0A05; }
+[hidden] { display: none !important; }
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* 무대 */
+.gm-stage.rm { overflow: clip; container-type: size; background: radial-gradient(70% 55% at 50% 48%, #FFE45C, #FFC800 75%, #F5B000); color: var(--gm-ink); }
+.sun { position: absolute; left: 50%; top: 50%; width: 260cqh; height: 260cqh; margin: -130cqh 0 0 -130cqh; pointer-events: none;
+  background: repeating-conic-gradient(from 0deg, rgba(255,255,255,.34) 0 6deg, transparent 6deg 18deg); animation: rm-spin 70s linear infinite;
+  -webkit-mask: radial-gradient(circle, #000 12%, rgba(0,0,0,.55) 40%, transparent 62%); mask: radial-gradient(circle, #000 12%, rgba(0,0,0,.55) 40%, transparent 62%); }
+@keyframes rm-spin { to { transform: rotate(360deg); } }
+.logo { position: absolute; z-index: 8; left: 16px; top: calc(12px + var(--st)); margin: 0; display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 15px; color: var(--brown); }
+.logo img { width: 24px; height: 24px; border-radius: 7px; display: block; }
+.gm-snd { background: rgba(122, 59, 0, .55); border-color: rgba(255,255,255,.7); }
+.rm.play .gm-snd { top: auto; bottom: calc(10px + var(--sb)); right: 12px; background: rgba(0,0,0,.4); }
+
+/* 훅 큰 문장 */
+.cap { position: absolute; z-index: 6; left: 0; right: 0; top: calc(44px + var(--st)); height: min(22cqh, 170px); display: grid; place-items: center; padding: 0 16px; text-align: center; pointer-events: none; transition: opacity .35s, transform .35s; }
+.cl { margin: 0; font-family: "BHS", var(--gm-sans); font-weight: 400; font-size: min(12cqw, 6.6cqh); line-height: 1.12; color: var(--red-d); letter-spacing: -.02em; text-shadow: 0 4px 0 rgba(255,255,255,.85); }
+.cl em { font-style: normal; color: var(--red); }
+.cl.pop { animation: rm-pop .55s cubic-bezier(.2,1.5,.4,1) both; }
+@keyframes rm-pop { 0% { transform: scale(.4) rotate(-6deg); opacity: 0; } 60% { transform: scale(1.08) rotate(1deg); opacity: 1; } 100% { transform: none; } }
+.cl .won { display: block; font-family: "GAS", var(--gm-sans); font-weight: 400; font-size: min(17cqw, 9.6cqh); line-height: 1.02; color: var(--red); letter-spacing: -.03em;
+  text-shadow: 0 .06em 0 var(--red-d), 0 .1em 0 rgba(255,255,255,.7); }
+.cl small { display: inline-block; margin-top: 8px; padding: 4px 12px; border-radius: 999px; background: #fff; color: var(--red-d); font-family: var(--gm-sans); font-size: 15px; font-weight: 800; text-shadow: none; letter-spacing: 0; }
+.rm.play .cap { opacity: 0; transform: translateY(-30px); }
+
+/* 라면 봉지 */
+.pkw { position: absolute; z-index: 4; left: 50%; top: calc(44px + var(--st) + min(22cqh, 170px) + (100cqh - 168px - var(--st) - min(22cqh, 170px) - var(--pkh)) / 2);
+  --pkw: min(86cqw, calc((100cqh - 192px - var(--st) - min(22cqh, 170px)) * .92)); --pkh: calc(var(--pkw) / .92);
+  width: var(--pkw); height: var(--pkh); margin-left: calc(var(--pkw) / -2); perspective: 900px; }
+.pk { position: absolute; inset: 0; container-type: inline-size; transform: rotate(-4deg); filter: drop-shadow(0 4cqh 3.5cqh rgba(120,60,0,.38)); transform-origin: 50% 90%; }
+.pk.idle { animation: rm-bob 3.2s ease-in-out infinite; }
+@keyframes rm-bob { 50% { transform: rotate(-2.5deg) translateY(-1.2%); } }
+.pk.drop { animation: rm-drop 1s cubic-bezier(.3,0,.3,1) both; }
+@keyframes rm-drop {
+  0% { transform: translateY(-130%) rotate(-14deg); }
+  42% { transform: translateY(0) rotate(-4deg) scale(1.08, .86); }
+  56% { transform: translateY(-9%) rotate(-6deg) scale(.96, 1.05); }
+  72% { transform: translateY(0) rotate(-3deg) scale(1.03, .95); }
+  84% { transform: translateY(-2.5%) rotate(-4deg); }
+  100% { transform: rotate(-4deg); }
+}
+.pk .bag { position: absolute; inset: 4.6% 0; border-radius: 3.4cqw; background: linear-gradient(90deg, #B80014, #E3001B 18%, #FF2A3A 50%, #E3001B 82%, #A50012); }
+.pk .crimp { position: absolute; left: 0; right: 0; height: 7%; background: repeating-linear-gradient(90deg, #C4001A 0 1.7cqw, #E8001D 1.7cqw 3.3cqw); }
+.pk .crimp.t { top: 0; clip-path: polygon(0 30%,3% 0,6% 30%,9% 0,12% 30%,15% 0,18% 30%,21% 0,24% 30%,27% 0,30% 30%,33% 0,36% 30%,39% 0,42% 30%,45% 0,48% 30%,51% 0,54% 30%,57% 0,60% 30%,63% 0,66% 30%,69% 0,72% 30%,75% 0,78% 30%,81% 0,84% 30%,87% 0,90% 30%,93% 0,96% 30%,100% 0,100% 100%,0 100%); }
+.pk .crimp.b { bottom: 0; clip-path: polygon(0 0,100% 0,100% 70%,97% 100%,94% 70%,91% 100%,88% 70%,85% 100%,82% 70%,79% 100%,76% 70%,73% 100%,70% 70%,67% 100%,64% 70%,61% 100%,58% 70%,55% 100%,52% 70%,49% 100%,46% 70%,43% 100%,40% 70%,37% 100%,34% 70%,31% 100%,28% 70%,25% 100%,22% 70%,19% 100%,16% 70%,13% 100%,10% 70%,7% 100%,4% 70%,0 100%); }
+.pk .shine { position: absolute; left: 13%; top: 7%; width: 12%; height: 86%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent); transform: skewX(-8deg); animation: rm-shine 4.5s ease-in-out infinite; }
+@keyframes rm-shine { 0%, 60% { left: 8%; opacity: .2; } 80% { left: 70%; opacity: 1; } 100% { left: 84%; opacity: 0; } }
+.pk p { margin: 0; position: absolute; }
+.pk-top { left: 0; right: 0; top: 12.5%; text-align: center; font-family: "BHS", var(--gm-sans); font-size: 5.6cqw; color: var(--yel-l); letter-spacing: .04em; }
+.pk-nm { left: 0; right: 0; top: 18.5%; text-align: center; font-family: "GAS", var(--gm-sans); font-size: 24cqw; line-height: 1; color: #fff; letter-spacing: -.04em;
+  -webkit-text-stroke: .7cqw var(--red-d); paint-order: stroke fill; text-shadow: 0 1cqw 0 var(--red-d); }
+.pk-bowl { position: absolute; left: 20%; top: 46%; width: 48%; overflow: visible; }
+.pk-bowl .steam path { opacity: .85; animation: rm-steam 2.4s ease-in-out infinite; }
+.pk-bowl .steam path:nth-child(2) { animation-delay: .5s; } .pk-bowl .steam path:nth-child(3) { animation-delay: 1s; }
+@keyframes rm-steam { 0% { transform: translateY(8px); opacity: 0; } 30% { opacity: .9; } 100% { transform: translateY(-26px); opacity: 0; } }
+.pk-one { right: 6%; top: 41%; width: 24cqw; height: 24cqw; border-radius: 50%; background: var(--yel); color: #C4001A; display: grid; place-items: center; font-family: "GAS", var(--gm-sans); font-size: 6.6cqw; line-height: 1;
+  box-shadow: 0 0 0 1cqw #fff, 0 1.6cqw 2cqw rgba(90,0,0,.35); transform: rotate(12deg) scale(0); }
+.pk-one.on { animation: rm-slap .5s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes rm-slap { 0% { transform: rotate(40deg) scale(2.4); opacity: 0; } 100% { transform: rotate(12deg) scale(1); opacity: 1; } }
+.pk-note { right: 7%; bottom: 13%; text-align: right; font-family: "BHS", var(--gm-sans); font-size: 5.4cqw; line-height: 1.22; color: var(--yel-l); opacity: 0; transform: translateY(10px); transition: opacity .35s, transform .35s; }
+.pk-note.on { opacity: 1; transform: none; }
+.tear { position: absolute; left: -2%; right: -2%; top: 0; height: 9%; pointer-events: none; opacity: 0; background: repeating-linear-gradient(90deg, #C4001A 0 6px, #E8001D 6px 12px); border-radius: 6px; transform: rotate(-4deg); }
+
+/* 주전자 — '끓는 물 필요 없음' */
+.ket { position: absolute; z-index: 7; right: 3%; top: calc(var(--st) + 64cqh); width: 30cqw; max-width: 150px; opacity: 0; transform: translateX(130%) rotate(10deg); pointer-events: none; }
+.ket svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ket.in { opacity: 1; transform: none; transition: transform .5s cubic-bezier(.2,1.4,.4,1), opacity .2s; }
+.ket-st path { animation: rm-steam 1.4s ease-in-out infinite; } .ket-st path + path { animation-delay: .5s; }
+.ket-no { position: absolute; left: 50%; top: 52%; width: 110%; margin: -55% 0 0 -55%; transform: scale(2.4); opacity: 0; }
+.ket.no .ket-no { opacity: 1; transform: none; transition: transform .35s cubic-bezier(.2,1.6,.4,1), opacity .15s; }
+.ket.out { opacity: 0; transform: translate(140%, 40%) rotate(70deg); transition: transform .55s cubic-bezier(.5,0,.8,.4), opacity .5s .1s; }
+
+/* 봉지 뜯기 → 뒤집기 */
+.rm.play .pkw .pk { animation: none; transform: rotate(-4deg) rotateY(90deg) scale(.8); opacity: 0; transition: transform .45s cubic-bezier(.5,0,.7,.4) .25s, opacity .2s .5s; }
+.tear.go { animation: rm-tear .7s cubic-bezier(.3,0,.6,1) forwards; }
+@keyframes rm-tear { 0% { opacity: 1; transform: rotate(-4deg); } 100% { opacity: 0; transform: translate(70%, -120%) rotate(28deg); } }
+
+/* 조리법 카드(봉지 뒷면) */
+.rc { position: absolute; z-index: 10; left: 12px; right: 12px; top: calc(12px + var(--st)); padding: 12px 12px 10px; border-radius: 20px;
+  background: linear-gradient(90deg, #B80014, #E3001B 20%, #F31A2B 50%, #E3001B 80%, #B00013); color: #fff; box-shadow: 0 14px 30px rgba(120,40,0,.35);
+  transform: rotateY(-90deg); opacity: 0; transition: transform .5s cubic-bezier(.2,1.3,.4,1), opacity .2s; }
+.rc::before { content: ""; position: absolute; left: 0; right: 0; top: -7px; height: 10px; background: repeating-linear-gradient(90deg, #C4001A 0 7px, #E8001D 7px 14px);
+  clip-path: polygon(0 100%,2% 0,4% 100%,6% 0,8% 100%,10% 0,12% 100%,14% 0,16% 100%,18% 0,20% 100%,22% 0,24% 100%,26% 0,28% 100%,30% 0,32% 100%,34% 0,36% 100%,38% 0,40% 100%,42% 0,44% 100%,46% 0,48% 100%,50% 0,52% 100%,54% 0,56% 100%,58% 0,60% 100%,62% 0,64% 100%,66% 0,68% 100%,70% 0,72% 100%,74% 0,76% 100%,78% 0,80% 100%,82% 0,84% 100%,86% 0,88% 100%,90% 0,92% 100%,94% 0,96% 100%,98% 0,100% 100%); }
+.rc.on { transform: none; opacity: 1; }
+.rc-hd { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.rc-hd > b { font-family: "GAS", var(--gm-sans); font-weight: 400; font-size: 24px; line-height: 1; color: var(--yel-l); letter-spacing: -.02em; padding-left: 4px; }
+.rc-steps { display: flex; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.rc-steps li { display: flex; align-items: center; gap: 4px; padding: 4px 9px 4px 4px; border-radius: 999px; background: rgba(255,255,255,.16); font-size: 13px; font-weight: 800; color: rgba(255,255,255,.75); transition: background .25s, color .25s; }
+.rc-steps li i { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 12px; background: rgba(255,255,255,.25); color: #fff; }
+.rc-steps li.cur { background: var(--yel); color: var(--red-d); }
+.rc-steps li.cur i { background: var(--red); }
+.rc-steps li.ok i { background: #fff; color: var(--red); }
+.rc-steps li.ok i::before { content: "✓"; font-size: 12px; }
+.rc-steps li.ok i { font-size: 0; }
+.rc-q { margin: 10px 0 0; padding: 12px 14px; border-radius: 14px; background: #FFFBF2; color: var(--red-d); font-size: 20px; font-weight: 800; line-height: 1.32; letter-spacing: -.03em; min-height: 52px; }
+.rc-q.pop { animation: rm-q .4s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes rm-q { from { transform: translateY(8px) scale(.97); opacity: 0; } }
+.rc-fine { margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 2px 14px; }
+.rc-fine button { border: 0; background: none; padding: 7px 2px; color: var(--yel-l); font-size: 15px; font-weight: 800; text-align: left; }
+.rc-fine button small { margin-left: 5px; font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.82); }
+.rc-fine button:active { transform: scale(.97); }
+
+/* 고르는 곳 */
+.zone { position: absolute; z-index: 9; left: 0; right: 0; top: calc(var(--rch, 190px) + 20px + var(--st)); bottom: 33cqh; padding: 0 12px; }
+.st { position: absolute; inset: 0 12px; display: grid; opacity: 0; transform: translateY(14px); transition: opacity .3s, transform .35s cubic-bezier(.2,1.3,.4,1); }
+.st.on { opacity: 1; transform: none; }
+.st button { border: 0; background: none; padding: 0; color: var(--gm-ink); -webkit-tap-highlight-color: transparent; }
+
+/* ① 면 고르기 */
+.s1 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 0 10px; align-items: center; }
+.nd { display: flex; flex-direction: column; align-items: center; gap: 4px; transition: transform .2s; }
+.nd svg { width: min(36cqw, 13.5cqh, 150px); height: auto; overflow: visible; filter: drop-shadow(0 10px 10px rgba(140,70,0,.38)); animation: rm-float 2.6s ease-in-out infinite; }
+.nd:nth-child(2) svg { animation-delay: -.7s; } .nd:nth-child(3) svg { animation-delay: -1.3s; } .nd:nth-child(4) svg { animation-delay: -1.9s; }
+@keyframes rm-float { 50% { transform: translateY(-5px) rotate(-2deg); } }
+.nd span { padding: 6px 12px; border-radius: 999px; background: #fff; color: var(--red-d); font-size: 15px; font-weight: 800; line-height: 1.25; box-shadow: 0 3px 0 rgba(138,0,15,.25); }
+.nd:nth-child(1) { transform: translateY(-6%) rotate(-3deg); } .nd:nth-child(2) { transform: translateY(6%) rotate(3deg); }
+.nd:nth-child(3) { transform: translateY(-2%) rotate(2deg); } .nd:nth-child(4) { transform: translateY(8%) rotate(-3deg); }
+.nd:active { transform: scale(.95); }
+.nd.gone { opacity: 0; transition: opacity .25s; }
+.nd.pick svg { visibility: hidden; }
+.nd.pick span { background: var(--red); color: #fff; }
+
+/* ② 몇 인분 — 그릇 쌓기 */
+.s2 { grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; padding-bottom: 4%; }
+.bw { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.bw b { padding: 8px 16px; border-radius: 999px; background: #fff; color: var(--red-d); font-size: 19px; font-weight: 900; box-shadow: 0 3px 0 rgba(138,0,15,.25); white-space: nowrap; }
+.stack { display: flex; flex-direction: column-reverse; align-items: center; }
+.stack i { display: block; width: min(28cqw, 120px); height: min(4.6cqh, 34px); margin-top: calc(min(4.6cqh, 34px) * -.42); border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: linear-gradient(#fff 0 22%, var(--yel) 22% 30%, #fff 30%); box-shadow: inset 0 -4px 0 #E7E2DA, 0 4px 6px rgba(120,60,0,.18); }
+.stack i:first-child { margin-top: 0; }
+.bw.many .stack i:nth-child(odd) { transform: translateX(3px); } .bw.many .stack i:nth-child(even) { transform: translateX(-3px); }
+.bw:active { transform: scale(.96); }
+.bw.pick b { background: var(--red); color: #fff; }
+.bw.pick .stack { animation: rm-hop .4s cubic-bezier(.2,1.6,.4,1); }
+@keyframes rm-hop { 40% { transform: translateY(-14px); } }
+
+/* ③ 불 세기 — 가스 손잡이 */
+.s3 { grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+.fl { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 6px !important; border-radius: 18px !important; background: #fff !important; box-shadow: 0 4px 0 rgba(138,0,15,.22), 0 10px 20px rgba(120,60,0,.15); }
+.fl svg { width: 30px; height: 36px; }
+.fl.hi svg { width: 40px; height: 48px; }
+.fl b { font-size: 20px; font-weight: 900; color: var(--red-d); }
+.fl small { font-size: 12.5px; font-weight: 700; color: #8A5A40; line-height: 1.3; text-align: center; }
+.fl:active { transform: scale(.96); }
+.fl.pick { background: var(--red) !important; } .fl.pick b, .fl.pick small { color: #fff; }
+.knob { position: relative; width: min(30cqw, 15cqh, 124px); aspect-ratio: 1; }
+.kn-ring { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 210deg, #3D8BFF, #7AC3FF 25%, #FFD84A 55%, #FF5A1F 85%, transparent 85%); -webkit-mask: radial-gradient(circle, transparent 58%, #000 59%, #000 68%, transparent 69%); mask: radial-gradient(circle, transparent 58%, #000 59%, #000 68%, transparent 69%); }
+.kn-cap { position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #C9D1D8 55%, #8E98A3); box-shadow: 0 8px 14px rgba(0,0,0,.3), inset 0 -4px 6px rgba(0,0,0,.18);
+  transition: transform .6s cubic-bezier(.2,1.5,.4,1); }
+.kn-grip { position: absolute; left: 50%; top: 6%; bottom: 6%; width: 22%; margin-left: -11%; border-radius: 10px; background: linear-gradient(90deg, #6A737C, #2F353B); }
+.kn-grip::after { content: ""; position: absolute; left: 50%; top: 6%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: var(--red); }
+.kn-l, .kn-r { position: absolute; bottom: -6px; font-size: 13px; font-weight: 900; color: var(--red-d); }
+.kn-l { left: 0; } .kn-r { right: 0; }
+.knob.lo .kn-cap { transform: rotate(-70deg); } .knob.hi .kn-cap { transform: rotate(80deg); } .knob.mid .kn-cap { transform: rotate(10deg); }
+
+/* 가스레인지 · 냄비 */
+.kit { position: absolute; z-index: 8; left: 0; right: 0; bottom: 0; height: 33cqh; pointer-events: none; transform: translateY(110%); transition: transform .55s cubic-bezier(.2,1.2,.4,1); }
+.kit::before { content: ""; position: absolute; left: -10%; right: -10%; bottom: -30%; height: 58%; border-radius: 50% 50% 0 0 / 30% 30% 0 0; background: linear-gradient(#3A3F45, #1E2226); box-shadow: inset 0 3px 0 rgba(255,255,255,.18); }
+.kit.on { transform: none; }
+.pot { position: absolute; left: 50%; bottom: calc(18% + 10px); width: min(58cqw, 23cqh * 1.41, 240px); margin-left: calc(min(58cqw, 23cqh * 1.41, 240px) / -2); }
+.p-body { display: block; width: 100%; height: auto; overflow: visible; }
+.pot.shake { animation: rm-rattle .18s linear infinite; }
+@keyframes rm-rattle { 25% { transform: translate(-1.5px, -1px) rotate(-.6deg); } 75% { transform: translate(1.5px, 0) rotate(.6deg); } }
+.pot.done { opacity: 0; transform: translateY(20px) scale(.9); transition: opacity .3s, transform .3s; }
+.p-in path { animation: rm-in .45s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes rm-in { from { transform: translateY(-30px) scale(.6); opacity: 0; } }
+.p-steam { position: absolute; left: 10%; right: 10%; bottom: 74%; height: 120%; pointer-events: none; }
+.p-steam i { position: absolute; bottom: 0; width: 34%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 68%); opacity: 0; }
+.p-steam i:nth-child(1) { left: 0; } .p-steam i:nth-child(2) { left: 30%; } .p-steam i:nth-child(3) { left: 60%; } .p-steam i:nth-child(4) { left: 18%; }
+.pot.warm .p-steam i { animation: rm-puff 2.4s ease-out infinite; }
+.pot.boil .p-steam i { animation: rm-puff 1s ease-out infinite; }
+.p-steam i:nth-child(2) { animation-delay: .4s !important; } .p-steam i:nth-child(3) { animation-delay: .8s !important; } .p-steam i:nth-child(4) { animation-delay: 1.2s !important; }
+@keyframes rm-puff { 0% { transform: translateY(10%) scale(.5); opacity: 0; } 25% { opacity: .9; } 100% { transform: translateY(-120%) scale(1.5); opacity: 0; } }
+.splash { position: absolute; z-index: 9; width: 10px; height: 10px; border-radius: 50%; background: #FF6A2A; pointer-events: none; }
+.flyer { position: absolute; z-index: 30; pointer-events: none; transform-origin: 50% 50%; }
+.flyer svg { width: 100%; height: auto; display: block; }
+
+.burner { position: absolute; left: 50%; bottom: 18%; width: min(48cqw, 200px); height: 22px; margin-left: calc(min(48cqw, 200px) / -2); }
+.grate { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; border-radius: 4px; background: repeating-linear-gradient(90deg, #15181B 0 14px, #2F353B 14px 18px); }
+.fire { position: absolute; left: 8%; right: 8%; bottom: 6px; height: 26px; display: flex; justify-content: space-around; align-items: flex-end; }
+.fire i { width: 12%; height: 40%; border-radius: 50% 50% 40% 40% / 70% 70% 30% 30%; background: linear-gradient(#BFE6FF, #3D8BFF 60%, rgba(43,108,255,0)); filter: blur(.4px); transform-origin: 50% 100%; animation: rm-flick .28s ease-in-out infinite alternate; transition: height .4s; }
+.fire i:nth-child(2n) { animation-delay: .12s; }
+@keyframes rm-flick { to { transform: scaleY(1.25) scaleX(.9); } }
+.fire.hi i { height: 120%; background: linear-gradient(#FFF1A8, #FFB21A 35%, #FF5A1F 70%, rgba(255,90,31,0)); }
+.fire.mid i { height: 80%; }
+.fire.lo i { height: 50%; }
+.fire.off i { height: 0; opacity: 0; }
+
+.bowls { position: absolute; left: 4%; bottom: calc(18% + 8px); width: 22%; display: flex; flex-wrap: wrap-reverse; justify-content: center; gap: 2px 0; }
+.bowls i { width: 46%; height: 13px; border-radius: 0 0 50% 50% / 0 0 100% 100%; background: linear-gradient(#fff 0 26%, var(--yel) 26% 36%, #fff 36%); box-shadow: 0 3px 4px rgba(0,0,0,.25); animation: rm-in .4s cubic-bezier(.2,1.5,.4,1) both; }
+
+.timer { position: absolute; right: 5%; bottom: calc(18% + 22px); width: min(19cqw, 80px); aspect-ratio: 1; opacity: 0; transform: scale(.4) rotate(-30deg); transition: transform .4s cubic-bezier(.2,1.6,.4,1), opacity .2s; }
+.timer.on { opacity: 1; transform: none; }
+.timer svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 6px 8px rgba(0,0,0,.3)); }
+.timer svg circle:first-child { stroke: var(--red); stroke-width: 5; }
+.t-ring { transition: stroke-dasharray 1s linear; }
+.timer b { position: absolute; inset: 0; display: grid; place-items: center; font-family: "GAS", var(--gm-sans); font-weight: 400; font-size: min(8cqw, 32px); color: var(--red-d); }
+.timer.tick b { animation: rm-tick .3s ease-out; }
+@keyframes rm-tick { from { transform: scale(1.35); } }
+
+.dish { position: absolute; left: 50%; bottom: 14%; width: min(74cqw, 32cqh * 1.36, 320px); margin-left: calc(min(74cqw, 32cqh * 1.36, 320px) / -2); opacity: 0; transform: translateY(40%) scale(.6); }
+.dish svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 14px 18px rgba(80,20,0,.35)); }
+.dish.on { opacity: 1; transform: none; transition: transform .6s cubic-bezier(.2,1.6,.4,1), opacity .2s; }
+.d-steam path { animation: rm-steam 1.8s ease-in-out infinite; } .d-steam path:nth-child(2) { animation-delay: .4s; } .d-steam path:nth-child(3) { animation-delay: .8s; }
+
+/* 하단 단추 · 결과 카드 — 라면 봉지 말투 */
+.gm-cta { box-shadow: 0 0 0 3px #fff, 0 12px 30px rgba(120,0,10,.4) !important; }
+.gm-cta b { font-family: "GAS", var(--gm-sans) !important; font-weight: 400 !important; font-size: 23px !important; letter-spacing: -.02em !important; }
+.gm-cta small { color: var(--yel-l); opacity: 1; }
+.gm-res-card { padding-top: 26px; box-shadow: 0 24px 70px rgba(80,0,0,.45) !important; }
+.gm-res-card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 12px; border-radius: 22px 22px 0 0; background: repeating-linear-gradient(90deg, #C4001A 0 8px, #E8001D 8px 16px); }
+.gm-res-eye { font-family: "GAS", var(--gm-sans) !important; font-weight: 400 !important; font-size: 25px !important; color: var(--red) !important; }
+.gm-res-price b { font-family: "GAS", var(--gm-sans) !important; font-weight: 400 !important; font-size: 40px !important; color: var(--red); letter-spacing: -.03em; }
+.gm-res-art { right: 12px; top: -58px; width: 120px; }
+.gm-res-art svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 8px 10px rgba(0,0,0,.3)); }
+.gm-btn.tel { background: var(--red); }
+.gm-stamp { color: #fff !important; font-family: "GAS", var(--gm-sans) !important; font-weight: 400 !important; font-size: 64px !important; text-shadow: 0 5px 0 var(--red-d), 0 0 0 #000, 0 12px 30px rgba(120,0,0,.45) !important; }
+.gm-stamp small { display: inline-block !important; margin-top: 12px; padding: 6px 16px; border-radius: 999px; background: var(--red); font-family: "BHS", var(--gm-sans); font-size: 24px; color: #fff; text-shadow: none; box-shadow: 0 4px 0 var(--red-d); }
+
+@media (min-width: 700px) { html, body { background: radial-gradient(60% 60% at 50% 40%, #4A1408, #1E0603); } }

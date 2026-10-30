@@ -1,0 +1,123 @@
+/* 이야기형 시안(69~73) 공통 — 시안_합치기.py 가 각 시안의 _page.js 앞에 붙인다.
+   스크롤 드러남 · 하단 단추로 여는 기장료 계산창(질문 3개 → 공용 TM.result). 시안은 CALC.open({ g: 'B' }) 로 업종을 미리 골라 열 수 있다. */
+(function () {
+  'use strict';
+  var T = window.TM, $ = T.$, doc = document, root = doc.documentElement, body = doc.body;
+  if (T.SHOT) root.classList.add('shot');
+  if (T.calm) root.classList.add('calm');
+
+  var rv = [].slice.call(doc.querySelectorAll('.rv'));
+  if (T.SHOT || T.calm || !('IntersectionObserver' in window)) rv.forEach(function (e) { e.classList.add('in'); });
+  else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: .15 });
+    rv.forEach(function (e) { io.observe(e); });
+  }
+
+  var calc = doc.createElement('section');
+  calc.className = 'calc'; calc.id = 'calc'; calc.hidden = true; calc.setAttribute('aria-label', '기장료 계산');
+  calc.innerHTML = '<div class="calc-in"><div class="calc-top"><p class="calc-st" id="cst">1 / 3</p><button class="calc-x" type="button" id="cx" aria-label="닫기">×</button></div>' +
+    '<div class="calc-bar"><i id="cbar"></i></div><h2 class="calc-q" id="cq"></h2><p class="calc-s" id="cs"></p><ul class="calc-o" id="co"></ul><p class="calc-m" id="cm"></p>' +
+    '<button class="calc-back" type="button" id="cb" hidden>← 이전 질문</button></div>';
+  (doc.querySelector('.gm-stage') || body).appendChild(calc);
+
+  var A = {}, step = 0, hist = [];
+  var IND = [['A', '도소매 · 온라인 판매', '옷가게, 마트, 스마트스토어'], ['B', '음식점 · 카페 · 제조', '식당, 카페, 공방, 건설·운수'],
+             ['C', '서비스 · 학원 · 프리랜서', '미용실, 학원, 디자인, 강사'], ['P', '전문직', '병원, 법률 사무소 등'], ['?', '그 밖의 업종', '잘 모르겠으면 이쪽']];
+  function render() {
+    var h = '', m = '';
+    $('cst').textContent = (step + 1) + ' / 3'; $('cbar').style.width = ((step + 1) / 3 * 100) + '%';
+    $('cb').hidden = !hist.length;
+    if (step === 0) {
+      $('cq').textContent = '어떤 일을 하세요?'; $('cs').textContent = '';
+      IND.forEach(function (o) { h += '<li><button type="button" data-v="' + o[0] + '"><span>' + o[1] + '<small>' + o[2] + '</small></span></button></li>'; });
+      m = '<button type="button" data-v="X">법인사업자예요</button>';
+    } else if (step === 1) {
+      $('cq').textContent = '4대보험 가입한 직원은 몇 명이에요?'; $('cs').textContent = '사장님 본인은 빼고 세어 주세요.';
+      h = '<li><button type="button" data-v="few"><span>없음 ~ 5명</span></button></li><li><button type="button" data-v="many"><span>6명 이상</span></button></li>';
+    } else {
+      $('cq').textContent = T.revQ(A.g); $('cs').textContent = '1월부터 12월까지 들어온 돈 기준이에요.';
+      h = '<li><button type="button" data-v="low"><span>네, 이하예요<small>올해 문을 열었어도 이쪽</small></span></button></li><li><button type="button" data-v="high"><span>넘어요</span></button></li>';
+      m = '<button type="button" data-v="unk">잘 모르겠어요</button>';
+    }
+    $('co').innerHTML = h; $('cm').innerHTML = m;
+    var f = $('co').querySelector('button'); if (f && !T.SHOT) f.focus({ preventScroll: true });
+  }
+  function open(pre) {
+    A = {}; step = 0; hist = [];
+    if (pre && pre.g) { A.g = pre.g; step = 1; }
+    render(); calc.hidden = false; body.classList.add('calc-on'); calc.scrollTop = 0; T.playing(true);
+  }
+  function close() { calc.hidden = true; body.classList.remove('calc-on'); T.playing(false); }
+  function done() {
+    close();
+    T.result(A.g === 'X' ? { g: 'X' } : A, { eye: '우리 가게 예상 기장료', again: '다시 계산하기', onAgain: function () { open(); } });
+  }
+  function pick(v, btn) {
+    if (btn) btn.classList.add('on');
+    T.sfx('select');
+    setTimeout(function () {
+      if (step === 0) { A.g = v; if (v === 'X') return done(); }
+      else if (step === 1) A.emp = v;
+      else { A.rev = v; return done(); }
+      hist.push(step); step++; render();
+    }, T.calm ? 0 : 170);
+  }
+  calc.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-v]'); if (b) { pick(b.getAttribute('data-v'), b); return; }
+    if (e.target.closest('#cx')) { T.sfx('tap'); close(); return; }
+    if (e.target.closest('#cb')) { T.sfx('tap'); step = hist.pop(); if (step === 0) delete A.emp; render(); }
+  });
+  doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !calc.hidden) close(); });
+  T.onPlay = function () { open(); };
+
+  var res = doc.querySelector('.gm-res');
+  if (res) res.addEventListener('click', function (e) { if (e.target === res) T.closeResult(); });
+
+  window.CALC = { open: open };
+})();
+
+/* 72 영수증 정리 — 스크롤한 만큼 영수증이 움직임(0 흩어짐 → .5 세 더미 → .8 장부철). 숫자 대신 위치만 바뀜 */
+(function () {
+  'use strict';
+  var T = window.TM, $ = T.$, doc = document;
+  var run = $('run'), field = $('field'), bind = $('bind'), N = 15, R = [];
+  var KC = ['var(--k0)', 'var(--k1)', 'var(--k2)'];
+  var rnd = (function (s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; })(7);   // 늘 같은 흩어짐
+  for (var i = 0; i < N; i++) {
+    var d = doc.createElement('div'), k = i % 3;
+    d.className = 'rc'; d.style.setProperty('--k', KC[k]); d.innerHTML = '<span class="zz"></span>';
+    field.appendChild(d);
+    R.push({ el: d, k: k, x0: 8 + rnd() * 84, y0: 8 + rnd() * 70, r0: -40 + rnd() * 80, s0: .85 + rnd() * .35, n: Math.floor(i / 3) });
+  }
+  function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function cl(t) { return t < 0 ? 0 : t > 1 ? 1 : t; }
+  var last = -1;
+  function draw(p) {
+    if (Math.abs(p - last) < .0005) return; last = p;
+    var W = field.clientWidth, H = field.clientHeight;
+    var a = ease(cl((p - .08) / .4)), b = ease(cl((p - .56) / .2));
+    R.forEach(function (r) {
+      var x1 = [20, 50, 80][r.k], y1 = 56 - r.n * 3.2, rot1 = (r.n % 2 ? 2 : -2);
+      var x = r.x0 + (x1 - r.x0) * a, y = r.y0 + (y1 - r.y0) * a, rot = r.r0 + (rot1 - r.r0) * a, s = r.s0 + (1 - r.s0) * a;
+      x = x + (50 - x) * b; y = y + (48 - y) * b; s = s * (1 - .6 * b);
+      r.el.style.transform = 'translate(' + (x / 100 * W) + 'px,' + (y / 100 * H) + 'px) rotate(' + rot + 'deg) scale(' + s + ')';
+      r.el.style.opacity = String(1 - cl((p - .66) / .08));
+    });
+    bind.style.opacity = String(cl((p - .62) / .1));
+    var bs = .7 + .3 * ease(cl((p - .62) / .14));
+    bind.style.transform = 'scale(' + bs + ') rotate(' + (-6 + 6 * cl((p - .62) / .14)) + 'deg)';
+    field.classList.toggle('sorted', p > .4 && p < .64);
+    var c = p < .22 ? 0 : p < .6 ? 1 : 2;
+    [0, 1, 2].forEach(function (j) { $('c' + j).classList.toggle('on', j === c); });
+    $('hint').style.opacity = p > .05 ? '0' : '1';
+  }
+  function prog() { var r = run.getBoundingClientRect(), span = run.offsetHeight - innerHeight; return span > 0 ? cl(-r.top / span) : 0; }
+  var raf = 0;
+  function onScroll() { if (!raf) raf = requestAnimationFrame(function () { raf = 0; draw(prog()); }); }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', function () { last = -1; onScroll(); });
+  draw(T.calm ? .9 : prog());
+  if (T.calm) { removeEventListener('scroll', onScroll); [0, 1].forEach(function (j) { $('c' + j).classList.remove('on'); }); $('c2').classList.add('on'); }
+})();

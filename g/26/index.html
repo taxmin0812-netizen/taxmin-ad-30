@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko" data-live-host="taxminlite.kr" data-variant="invite" data-variant-name="게임-청첩장" data-look="smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>부가세 신고 날, 이제 혼자 아니에요 — 월 5만원부터 | 택스민</title>
+<meta name="description" content="부가세 신고 날, 이제 혼자 아니에요. 월 5만원부터. 회신 카드 세 줄만 고르면 우리 가게 기장료가 나와요. 개인사업자 기장 택스민(부가세 별도).">
+<meta name="theme-color" content="#EADBD0">
+<link rel="canonical" href="https://taxminlite.kr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="택스민">
+<meta property="og:url" content="https://taxminlite.kr/">
+<meta property="og:title" content="부가세 신고 날, 이제 혼자 아니에요">
+<meta property="og:description" content="월 5만원부터. 회신 카드 세 줄만 고르면 우리 가게 기장료가 나와요(부가세 별도).">
+<meta property="og:image" content="https://taxminlite.kr/img/og.jpg">
+<link rel="icon" href="../_s/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../_s/img/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../_s/img/apple-touch-icon.png">
+<link rel="stylesheet" href="../_s/pretendard.css">
+<link rel="stylesheet" href="../_s/game.css">
+<link rel="stylesheet" href="css/page.css?v=7ea40249">
+<script src="../_s/game.js" defer></script>
+<script src="js/page.js?v=95351ca3" defer></script>
+</head>
+<body>
+<main class="gm-stage wd" id="stage">
+  <h1 class="vh">부가세 신고 날, 이제 혼자 아니에요. 월 5만원부터(부가세 별도).</h1>
+
+  <div class="dust" id="dust" aria-hidden="true"></div>
+  <p class="brand"><img src="../_s/img/favicon.svg" alt="" width="22" height="22">택스민</p>
+
+  <div class="scene" id="scene" aria-hidden="true">
+    <div class="ep e-back"><i class="liner"></i></div>
+    <div class="ep e-flap" id="flap"><div class="flap-in"><i class="fe"></i><i class="fo"></i><i class="fi"></i></div></div>
+
+    <div class="card" id="card">
+      <div class="card-in">
+        <div class="face front">
+          <svg class="leaf l1" viewBox="0 0 200 200" fill="none" stroke="#C9A66B" stroke-width="3" stroke-linecap="round"><path pathLength="1" d="M20 190C60 120 110 80 190 40"/><path pathLength="1" d="M60 140c-20-30-10-50 10-60 10 25 5 45-10 60zM100 100c-10-35 5-55 30-60 0 30-10 48-30 60zM140 70c0-30 20-45 40-45-5 25-18 40-40 45zM80 120c25-15 50-10 60 5-25 12-45 10-60-5z"/></svg>
+          <svg class="leaf l2" viewBox="0 0 200 200" fill="none" stroke="#C9A66B" stroke-width="3" stroke-linecap="round"><path pathLength="1" d="M20 190C60 120 110 80 190 40"/><path pathLength="1" d="M60 140c-20-30-10-50 10-60 10 25 5 45-10 60zM100 100c-10-35 5-55 30-60 0 30-10 48-30 60zM140 70c0-30 20-45 40-45-5 25-18 40-40 45z"/></svg>
+          <p class="inv">초대합니다</p>
+          <p class="names">사장님<i>&amp;</i>세무사</p>
+          <p class="vow">부가세 신고 날,<br>이제 혼자 아니에요.</p>
+          <i class="rule"></i>
+          <p class="gold" id="gold"><b>월 5만원부터</b><small>부가세 별도</small></p>
+        </div>
+
+        <div class="face back" id="rsvp">
+          <header class="rs-h">
+            <p class="rs-k">R.S.V.P.</p>
+            <p class="rs-s">참석 회신 카드</p>
+            <ol class="rs-dots" id="rs-dots"><li>I</li><li>II</li><li>III</li></ol>
+          </header>
+
+          <div class="rs-q" data-q="1">
+            <p class="rs-t">어떤 일을 하세요?</p>
+            <div class="rs-ops">
+              <button class="ch" type="button" data-g="A">도소매 · 온라인 판매</button>
+              <button class="ch" type="button" data-g="B">음식점 · 카페 · 제조</button>
+              <button class="ch" type="button" data-g="C">서비스 · 프리랜서 · 학원</button>
+              <button class="ch" type="button" data-g="?">그 밖의 업종</button>
+            </div>
+            <p class="rs-more"><button type="button" data-g="P">전문직이에요<small>의료·법률·세무 등</small></button><button type="button" data-g="X">법인사업자예요</button></p>
+          </div>
+
+          <div class="rs-q" data-q="2" hidden>
+            <p class="rs-t">4대보험 직원은<br>몇 명이에요?</p>
+            <div class="rs-ops">
+              <button class="ch" type="button" data-v="few">없음 ~ 5명</button>
+              <button class="ch" type="button" data-v="many">6명 이상</button>
+            </div>
+          </div>
+
+          <div class="rs-q" data-q="3" hidden>
+            <p class="rs-t" id="rev-q">작년 매출이 기준 이하인가요?</p>
+            <div class="rs-ops">
+              <button class="ch" type="button" data-v="low">이하예요<small>올해 시작했어도 이쪽</small></button>
+              <button class="ch" type="button" data-v="high">넘어요</button>
+            </div>
+            <p class="rs-more"><button type="button" data-v="unk">잘 모르겠어요</button></p>
+          </div>
+
+          <div class="rs-end" id="rs-end" hidden>
+            <p class="rs-ty">With Pleasure</p>
+            <p class="rs-seal" id="rs-seal">함께하겠습니다</p>
+          </div>
+
+          <button class="rs-re" type="button" id="rs-re">처음부터</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ep e-front"><p class="to">To. 사장님</p></div>
+    <div class="ep e-seal" id="seal"><i class="sh l"></i><i class="sh r"></i></div>
+  </div>
+
+  <div class="petals" id="petals" aria-hidden="true"></div>
+  <p class="gm-legal">사무소명 세무회계 민 · 사업자번호 546-54-00533 · 대표자 이민기(세무사)<a href="privacy.html">개인정보처리방침</a></p>
+</main>
+<a class="gm-cta" href="#play" data-play><span class="gm-cta-t"><b>청첩장 회신하기</b><small>기장료 계산하고 상담받기</small></span><span class="gm-cta-ar" aria-hidden="true">›</span></a>
+</body>
+</html>

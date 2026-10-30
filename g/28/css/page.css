@@ -1,0 +1,235 @@
+/* 28 탑승권 — 하늘 · 구름 · 비행기 · 흰 탑승권. 놀이: 공항 셀프 체크인(노선 지도 → 동반 승객 → 좌석) → 탑승권 인쇄 → 이륙 */
+@font-face { font-family: "MONO"; src: url(../fonts/IBMPlexMono-Medium.woff2) format("woff2"); font-display: block; }
+@font-face { font-family: "MONOB"; src: url(../fonts/IBMPlexMono-Bold.woff2) format("woff2"); font-display: block; }
+:root {
+  --ink: #0B3A4A; --teal: #0F6B7A; --teal-l: #1B8797; --org: #FF5B2E; --lab: #6A8A93; --sky: #7CC6E8; --fog: #EAF6FA;
+  --mono: "MONO", "Pretendard Variable", Pretendard, monospace; --monob: "MONOB", "Pretendard Variable", Pretendard, monospace;
+  --gm-or: #FF5B2E; --gm-ink: #0B3A4A;
+  --gm-cta-bg: linear-gradient(180deg, #13808F, #0D5F6C); --gm-cta-fg: #fff;
+  --gm-res-bg: rgba(11, 58, 74, .55); --gm-card: #fff; --gm-card-fg: #0B3A4A;
+  --gm-legal: rgba(11, 58, 74, .72);
+  color-scheme: light;
+}
+[hidden] { display: none !important; }
+html, body { background: #0B3A4A; }
+@media (min-width: 700px) { html, body { background: radial-gradient(70% 60% at 50% 30%, #1B5A6E, #082733); } }
+
+.gm-stage.bp { overflow: clip; container-type: size; background: linear-gradient(#6DBDE3 0%, #A9DAF0 45%, #DDF1F8 78%, #F1F9FB); color: var(--ink); }
+.logo { position: absolute; z-index: 8; left: 16px; top: calc(12px + var(--st)); margin: 0; display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 15px; color: var(--ink); }
+.logo img { width: 24px; height: 24px; border-radius: 7px; display: block; }
+.gm-snd { background: rgba(11, 58, 74, .4); border-color: rgba(255,255,255,.8); }
+
+/* 하늘 · 구름 */
+.sky { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.cl { position: absolute; border-radius: 50%; background: #fff; filter: blur(3px); opacity: .85; animation: bp-drift linear infinite; }
+.cl::before, .cl::after { content: ""; position: absolute; border-radius: 50%; background: inherit; }
+.cl::before { width: 55%; height: 140%; left: 14%; bottom: 20%; } .cl::after { width: 42%; height: 120%; right: 12%; bottom: 25%; }
+.c1 { width: 46cqw; height: 9cqw; top: 22cqh; left: -10cqw; animation-duration: 46s; opacity: .55; }
+.c2 { width: 64cqw; height: 13cqw; top: 58cqh; left: 50cqw; animation-duration: 60s; animation-delay: -20s; opacity: .7; }
+.c3 { width: 80cqw; height: 18cqw; bottom: -4cqw; left: -24cqw; animation-duration: 80s; }
+.c4 { width: 90cqw; height: 20cqw; bottom: -7cqw; left: 46cqw; animation-duration: 90s; animation-delay: -30s; }
+.c5 { width: 34cqw; height: 7cqw; top: 40cqh; left: 70cqw; animation-duration: 38s; animation-delay: -10s; opacity: .5; }
+@keyframes bp-drift { from { transform: translateX(14cqw); } to { transform: translateX(-14cqw); } }
+
+/* 비행기 · 비행운 */
+.plane { position: absolute; z-index: 3; right: 16px; top: calc(54px + var(--st)); width: min(26cqw, 120px); transform: rotate(-12deg); filter: drop-shadow(0 6px 8px rgba(11,58,74,.18)); }
+.plane.fly { animation: bp-arrive 1.6s cubic-bezier(.15,.7,.3,1) both; }
+@keyframes bp-arrive { from { transform: translate(-110cqw, 38cqh) rotate(-24deg) scale(1.9); } to { transform: rotate(-12deg); } }
+.plane.idle { animation: bp-hover 3.6s ease-in-out infinite; }
+@keyframes bp-hover { 50% { transform: translateY(-5px) rotate(-10deg); } }
+.trail { position: absolute; z-index: 2; right: calc(16px + min(26cqw, 120px) * .9); top: calc(54px + var(--st) + min(26cqw, 120px) * .28); width: 120cqw; height: 4px; border-radius: 4px; transform-origin: 100% 50%;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.95)); transform: rotate(-17deg) scaleX(0); opacity: 0; }
+.trail.on { animation: bp-trail 2.6s ease-out forwards; }
+@keyframes bp-trail { 0% { transform: rotate(-17deg) scaleX(0); opacity: 1; } 60% { transform: rotate(-17deg) scaleX(1); opacity: .9; } 100% { transform: rotate(-17deg) scaleX(1); opacity: 0; } }
+
+/* 첫 화면 세 박자 */
+.hero { position: absolute; z-index: 4; left: 16px; right: 16px; top: calc(46px + var(--st)); bottom: 122px; display: flex; flex-direction: column; justify-content: space-evenly; transition: opacity .4s, transform .45s; }
+.bp.play .hero { opacity: 0; transform: translateY(40px) scale(.96); pointer-events: none; }
+.hl { margin: 0; font-size: min(9.4cqw, 5.4cqh); font-weight: 900; line-height: 1.16; letter-spacing: -.045em; color: var(--ink); opacity: 0; transform: translateY(16px); transition: opacity .5s, transform .6s cubic-bezier(.2,1.2,.4,1); }
+.hl.on { opacity: 1; transform: none; }
+
+/* 출발 안내판(촤르륵) */
+.fids { align-self: center; width: 100%; max-width: 420px; padding: 10px 12px 9px; border-radius: 14px; background: linear-gradient(#18262C, #0E181C); box-shadow: 0 18px 34px rgba(11,58,74,.35), inset 0 1px 0 rgba(255,255,255,.1);
+  opacity: 0; transform: translateY(-14px) rotateX(30deg); transform-origin: 50% 0; transition: opacity .35s, transform .5s cubic-bezier(.2,1.3,.4,1); }
+.fids.on { opacity: 1; transform: none; }
+.fids-hd, .fids-ft { display: flex; align-items: center; gap: 8px; font-family: var(--monob); font-size: 12.5px; letter-spacing: .12em; color: #FFC93C; }
+.fids-hd span { font-family: var(--gm-sans); font-weight: 800; letter-spacing: 0; color: rgba(255,255,255,.65); font-size: 12px; }
+.fids-hd em { margin-left: auto; font-style: normal; color: #fff; }
+.fids-ft { margin-top: 7px; color: rgba(255,255,255,.75); justify-content: space-between; }
+.fids-ft .ok { display: flex; align-items: center; gap: 6px; color: #7CE0A0; font-family: var(--gm-sans); font-weight: 800; letter-spacing: 0; font-size: 13px; }
+.fids-ft .ok i { width: 8px; height: 8px; border-radius: 50%; background: #3BD27A; box-shadow: 0 0 8px #3BD27A; animation: bp-blink 1s ease-in-out infinite; }
+@keyframes bp-blink { 50% { opacity: .2; } }
+.flaps { display: flex; justify-content: center; gap: min(1.6cqw, 7px); margin-top: 8px; perspective: 300px; }
+.flaps i { position: relative; width: min(19cqw, 9.6cqh, 84px); aspect-ratio: .84; border-radius: 7px; background: linear-gradient(#2A3B42 0 49.4%, #10191D 49.4% 50.6%, #233238 50.6%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 3px 0 #05090B;
+  display: grid; place-items: center; overflow: hidden; font-style: normal; }
+.flaps b { display: block; font-size: min(12.4cqw, 6.2cqh, 54px); font-weight: 900; line-height: 1; color: #F5F1E0; letter-spacing: -.04em; transform-origin: 50% 50%; }
+.flaps i.f b { animation: bp-flap .07s ease-in; }
+@keyframes bp-flap { from { transform: rotateX(80deg); opacity: .4; } }
+.flaps i.hit b { color: #FFC93C; }
+.flaps i::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,.55); }
+
+/* 탑승권 */
+.pass { position: relative; align-self: center; width: 100%; max-width: 440px; border-radius: 20px; background: #fff; box-shadow: 0 22px 44px rgba(11,58,74,.28); overflow: hidden; container-type: inline-size;
+  opacity: 0; transform: translateY(60px) rotate(4deg); transition: opacity .3s, transform .7s cubic-bezier(.2,1.35,.4,1); }
+.pass.on { opacity: 1; transform: rotate(-2.5deg); }
+.p-hd { display: flex; justify-content: space-between; padding: 3.2cqw 5cqw; background: var(--teal); color: #fff; font-family: var(--monob); font-size: 3.5cqw; letter-spacing: .12em; }
+.p-bd { display: flex; }
+.p-main { flex: 1; min-width: 0; padding: 3.6cqw 4.4cqw 4cqw 5cqw; }
+.p-rt { display: flex; align-items: flex-end; gap: 2.4cqw; }
+.p-rt svg { width: 11cqw; flex: none; margin-bottom: 1.6cqw; }
+.p-rt small, .p-fl small, .p-fare small, .tk small { font-family: var(--mono); }
+.p-rt small, .p-fl small, .p-fare small { display: block; font-size: 2.8cqw; color: var(--lab); letter-spacing: .14em; }
+.p-rt b { display: block; font-size: 6.6cqw; font-weight: 900; letter-spacing: -.045em; line-height: 1.15; white-space: nowrap; }
+.p-fl { display: flex; gap: 7cqw; margin-top: 2.6cqw; }
+.p-fl b { font-size: 4.4cqw; font-weight: 800; }
+.p-fare { margin-top: 2.6cqw; display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 2.6cqw; }
+.p-fare small { flex-basis: 100%; }
+.p-fare b { font-size: 12.4cqw; font-weight: 900; color: var(--org); letter-spacing: -.05em; line-height: 1.04; }
+.p-fare i { font-style: normal; font-size: 3.6cqw; font-weight: 800; color: var(--lab); }
+.pass.on .p-fare b { animation: bp-fare .6s .45s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes bp-fare { from { transform: scale(.6); opacity: 0; } }
+.p-stub { position: relative; width: 23%; flex: none; border-left: 2px dashed #C5D7DC; padding: 3.6cqw 3.2cqw; display: flex; flex-direction: column; gap: 2.4cqw; }
+.p-stub::before, .p-stub::after { content: ""; position: absolute; left: -2.6cqw; width: 5cqw; height: 5cqw; border-radius: 50%; background: #CBE8F4; }
+.p-stub::before { top: -2.5cqw; } .p-stub::after { bottom: -2.5cqw; }
+.p-stub b { font-family: var(--monob); font-size: 3.3cqw; color: var(--teal); letter-spacing: .06em; white-space: nowrap; }
+.bar { flex: 1; min-height: 20cqw; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 8px, var(--ink) 8px 11px, transparent 11px 12px, var(--ink) 12px 13px, transparent 13px 16px); border-radius: 2px; }
+
+/* ── 셀프 체크인 키오스크 ── */
+.ks { position: absolute; z-index: 10; left: 12px; right: 12px; top: calc(12px + var(--st)); bottom: 12px; display: flex; flex-direction: column; border-radius: 28px;
+  background: linear-gradient(160deg, #FBFCFD, #DCE4E9 60%, #C9D3D9); box-shadow: 0 30px 60px rgba(11,58,74,.35), inset 0 2px 0 #fff, inset 0 -3px 0 rgba(0,0,0,.08); padding: 10px 10px 0;
+  transform: translateY(105%); transition: transform .6s cubic-bezier(.2,1.1,.3,1); }
+.ks.on { transform: none; }
+.ks.up { transform: translateY(calc(-1 * var(--tkh, 220px) - 20px)); transition: transform .7s cubic-bezier(.4,0,.2,1); }
+.ks.away { transform: translateY(115%); transition: transform .6s cubic-bezier(.5,0,.8,.4); }
+.ks-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 8px 10px 10px; padding-right: 92px; }
+.ks-top b { font-size: 18px; font-weight: 900; letter-spacing: -.03em; color: var(--ink); white-space: nowrap; }
+.ks-top span { font-family: var(--monob); font-size: 10.5px; letter-spacing: .1em; color: var(--lab); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ks-scr { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; border-radius: 18px; background: #fff; box-shadow: inset 0 0 0 4px #1D2A30, inset 0 0 0 5px #3B4A51; padding: 14px 14px 10px; overflow: hidden; }
+.ks-prog { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.ks-prog li { flex: 1; display: flex; align-items: center; gap: 5px; padding-bottom: 7px; border-bottom: 3px solid #E1E9EC; font-size: 13px; font-weight: 800; color: #9AB0B6; white-space: nowrap; transition: color .3s, border-color .3s; }
+.ks-prog li i { width: 19px; height: 19px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-family: var(--monob); font-size: 11px; background: #E1E9EC; color: #fff; flex: none; }
+.ks-prog li.cur { color: var(--ink); border-color: var(--org); } .ks-prog li.cur i { background: var(--org); }
+.ks-prog li.ok { color: var(--teal); border-color: var(--teal); } .ks-prog li.ok i { background: var(--teal); font-size: 0; }
+.ks-prog li.ok i::before { content: "✓"; font-size: 11px; font-family: var(--gm-sans); }
+.ks-q { margin: 12px 2px 10px; font-size: 21px; font-weight: 900; line-height: 1.3; letter-spacing: -.04em; color: var(--ink); }
+.ks-q.pop { animation: bp-q .4s cubic-bezier(.2,1.3,.4,1) both; }
+@keyframes bp-q { from { transform: translateX(14px); opacity: 0; } }
+.pg { flex: 1; min-height: 0; display: flex; flex-direction: column; opacity: 0; transform: translateX(24px); transition: opacity .3s, transform .4s cubic-bezier(.2,1.2,.4,1); }
+.pg.on { opacity: 1; transform: none; }
+.pg button { -webkit-tap-highlight-color: transparent; }
+.ks-alt { margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 4px 8px; }
+.ks-alt button { border: 0; border-radius: 999px; background: #EEF4F6; padding: 9px 14px; font-size: 14.5px; font-weight: 800; color: var(--teal); }
+.ks-alt button::after { content: " ›"; }
+.ks-alt button small { margin-left: 5px; font-size: 12px; font-weight: 600; color: var(--lab); font-family: var(--gm-sans); }
+.ks-alt button:active { background: #DCEBEF; }
+
+/* ① 노선 지도 */
+.map { position: relative; flex: 1; min-height: 0; border-radius: 14px; background: radial-gradient(circle, rgba(15,107,122,.16) 1px, transparent 1.6px) 0 0 / 14px 14px, linear-gradient(160deg, #EAF6FA, #D6EDF5); overflow: hidden; }
+.map::before { content: ""; position: absolute; left: -10%; top: 30%; width: 70%; height: 60%; border-radius: 46% 54% 40% 60%; background: rgba(15,107,122,.07); }
+.map::after { content: ""; position: absolute; right: -14%; top: -8%; width: 64%; height: 56%; border-radius: 60% 40% 50% 50%; background: rgba(15,107,122,.07); }
+.routes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.routes path { fill: none; stroke: #7FA9B4; stroke-width: 2; stroke-dasharray: 5 6; vector-effect: non-scaling-stroke; transition: stroke .3s, opacity .3s; }
+.routes path.go { stroke: var(--org); stroke-width: 3; stroke-dasharray: none; }
+.routes path.dim { opacity: .2; }
+.org { position: absolute; left: 8%; top: 95%; transform: translate(-6px, -50%); display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; color: var(--lab); z-index: 1; }
+.org i { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 4px rgba(11,58,74,.18); }
+.dst { position: absolute; z-index: 2; transform: translate(-50%, -7px); display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 0; border: 0; background: none; color: var(--ink); }
+.dst .pin { width: 14px; height: 14px; border-radius: 50%; background: var(--org); box-shadow: 0 0 0 5px rgba(255,91,46,.22); margin-bottom: 5px; animation: bp-ping 1.8s ease-out infinite; }
+@keyframes bp-ping { 0% { box-shadow: 0 0 0 0 rgba(255,91,46,.5); } 100% { box-shadow: 0 0 0 14px rgba(255,91,46,0); } }
+.dst b { font-family: var(--monob); font-size: 13px; letter-spacing: .1em; color: #fff; background: var(--ink); padding: 2px 8px; border-radius: 6px 6px 0 0; }
+.dst span { white-space: nowrap; padding: 6px 11px; border-radius: 10px; background: #fff; font-size: 14.5px; font-weight: 800; line-height: 1.25; text-align: center; box-shadow: 0 4px 12px rgba(11,58,74,.16), inset 0 0 0 1.5px #CFE0E5; }
+.dst:active span { transform: scale(.96); }
+.dst.pick span { background: var(--org); color: #fff; box-shadow: 0 6px 16px rgba(255,91,46,.4); }
+.dst.pick b { background: var(--org); }
+.dst.dim { opacity: .3; }
+.d-a { left: 66%; top: 9%; } .d-b { left: 30%; top: 29%; } .d-c { left: 63%; top: 49%; } .d-q { left: 33%; top: 69%; }
+.mini { position: absolute; z-index: 3; left: 0; top: 0; width: 38px; opacity: 0; pointer-events: none; filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
+
+/* ② 동반 승객 */
+.pg2 { gap: 12px; justify-content: center; }
+.pax { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px 18px; border: 0; border-radius: 18px; background: #F2F7F9; box-shadow: inset 0 0 0 2px #D5E3E8; text-align: left; color: var(--ink); transition: transform .15s, background .2s; }
+.pax b { font-size: 22px; font-weight: 900; letter-spacing: -.03em; }
+.pax b::after { content: "  ›"; color: var(--org); }
+.ppl { display: flex; align-items: flex-end; gap: 6px; }
+.ppl i { position: relative; width: 20px; height: 30px; }
+.ppl i::before { content: ""; position: absolute; left: 4px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); }
+.ppl i::after { content: ""; position: absolute; left: 0; bottom: 0; width: 20px; height: 15px; border-radius: 10px 10px 4px 4px; background: var(--teal); }
+.ppl i.dim::before, .ppl i.dim::after { background: #BFD3D9; }
+.ppl em { font-style: normal; font-size: 22px; font-weight: 900; color: var(--teal); line-height: 1; }
+.pax:active { transform: scale(.98); }
+.pax.pick { background: var(--org); box-shadow: none; color: #fff; } .pax.pick b::after { color: #fff; }
+.pax.pick .ppl i::before, .pax.pick .ppl i::after { background: #fff; } .pax.pick .ppl i.dim::before, .pax.pick .ppl i.dim::after { background: rgba(255,255,255,.45); } .pax.pick .ppl em { color: #fff; }
+.pax.pick .ppl i { animation: bp-hop .4s cubic-bezier(.2,1.6,.4,1) both; }
+.pax.pick .ppl i:nth-child(2) { animation-delay: .05s; } .pax.pick .ppl i:nth-child(3) { animation-delay: .1s; } .pax.pick .ppl i:nth-child(4) { animation-delay: .15s; } .pax.pick .ppl i:nth-child(5) { animation-delay: .2s; } .pax.pick .ppl i:nth-child(6) { animation-delay: .25s; }
+@keyframes bp-hop { 40% { transform: translateY(-8px); } }
+
+/* ③ 좌석 지도 */
+.cabin { position: relative; flex: 1; min-height: 0; display: flex; justify-content: center; }
+.wing { position: absolute; left: 0; right: 0; top: 46%; height: 26%; background: linear-gradient(#D6E2E7, #BFCFD6); clip-path: polygon(50% 0, 100% 62%, 100% 82%, 50% 52%, 0 82%, 0 62%); opacity: .8; }
+.fus { position: relative; z-index: 1; height: 100%; width: min(64%, 250px); display: flex; flex-direction: column; gap: 6px; padding: 16% 8% 6%; border-radius: 50% 50% 22px 22px / 22% 22% 22px 22px; background: linear-gradient(90deg, #E4ECEF, #fff 30%, #fff 70%, #E4ECEF); box-shadow: 0 10px 24px rgba(11,58,74,.18), inset 0 0 0 2px #D0DEE3; }
+.fus::before { content: ""; position: absolute; left: 50%; top: 4%; width: 26%; height: 6%; margin-left: -13%; border-radius: 50% 50% 20% 20%; background: #9CC3D1; }
+.sec { position: relative; display: grid; place-items: center; border: 0; padding: 8px 6px; border-radius: 12px; background: none; color: var(--ink); transition: background .2s; }
+.sec.biz { flex: 1; background: rgba(15,107,122,.07); } .sec.eco { flex: 1.6; background: rgba(255,91,46,.05); }
+.seats { display: grid; gap: 4px; width: 100%; height: 100%; }
+.biz .seats { grid-template-columns: 1fr 1fr .7fr 1fr 1fr; } .eco .seats { grid-template-columns: 1fr 1fr 1fr .6fr 1fr 1fr 1fr; }
+.seats i { border-radius: 5px 5px 3px 3px; background: #B9CDD4; box-shadow: inset 0 -3px 0 rgba(0,0,0,.1); min-height: 8px; }
+.biz .seats i { background: #7FA9B4; border-radius: 8px 8px 4px 4px; }
+.seats u { text-decoration: none; }
+.seats i.me { background: var(--org) !important; box-shadow: 0 0 0 3px rgba(255,91,46,.35); animation: bp-seat .5s cubic-bezier(.2,1.6,.4,1); }
+@keyframes bp-seat { from { transform: scale(1.8); } }
+.tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; padding: 7px 14px; border-radius: 12px; background: rgba(255,255,255,.95); box-shadow: 0 6px 16px rgba(11,58,74,.22); white-space: nowrap; }
+.tag b { font-size: 19px; font-weight: 900; letter-spacing: -.03em; }
+.tag small { font-family: var(--gm-sans); font-size: 12px; font-weight: 700; color: var(--lab); }
+.sec:active .tag { transform: translate(-50%, -50%) scale(.96); }
+.sec.pick .tag { background: var(--org); color: #fff; } .sec.pick .tag small { color: rgba(255,255,255,.85); }
+.sec.dim { opacity: .35; }
+
+/* ④ 인쇄 중 */
+.pg4 { justify-content: center; align-items: center; }
+.prt { margin: 0; display: grid; gap: 14px; justify-items: center; }
+.prt b { font-size: 20px; font-weight: 900; }
+.bar2 { width: 200px; height: 8px; border-radius: 8px; background: #E1E9EC; overflow: hidden; }
+.bar2 i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--teal); }
+.pg4.on .bar2 i { animation: bp-load 1.8s ease-in-out forwards; }
+@keyframes bp-load { to { width: 100%; } }
+
+/* 출구 · 인쇄된 탑승권 */
+.ks-slot { height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+.ks-slot i { width: 76%; height: 9px; border-radius: 6px; background: #121A1E; box-shadow: inset 0 3px 4px rgba(0,0,0,.6), 0 1px 0 #fff; }
+.ks-slot span { font-size: 11px; font-weight: 800; color: var(--lab); }
+.tkw { visibility: hidden; position: absolute; left: 13%; right: 13%; top: calc(100% - 26px); height: var(--tkh, 220px); overflow: hidden; pointer-events: none; }
+.tk { height: 100%; border-radius: 0 0 14px 14px; background: #fff; box-shadow: 0 16px 30px rgba(11,58,74,.3); transform: translateY(-101%); display: flex; flex-direction: column; container-type: inline-size; overflow: hidden; }
+.ks.up .tkw, .ks.away .tkw { visibility: visible; }
+.tk.out { transform: none; transition: transform 1.5s steps(9, end); }
+.tk-hd { display: flex; justify-content: space-between; padding: 4cqw 6cqw; background: var(--teal); color: #fff; font-family: var(--monob); font-size: 4.2cqw; letter-spacing: .12em; }
+.tk-rt { display: flex; align-items: flex-end; gap: 3cqw; padding: 4cqw 6cqw 0; }
+.tk-rt svg { width: 12cqw; flex: none; margin-bottom: 2cqw; }
+.tk small { display: block; font-size: 3.3cqw; color: var(--lab); letter-spacing: .14em; }
+.tk-rt b { font-size: 8cqw; font-weight: 900; letter-spacing: -.04em; white-space: nowrap; }
+.tk-fl { display: flex; justify-content: space-between; padding: 3cqw 6cqw 0; }
+.tk-fl b { font-family: var(--monob); font-size: 5.6cqw; color: var(--ink); white-space: nowrap; }
+.tk-fl div:last-child b { color: var(--org); }
+.tk-bar { flex: 1; margin: 4cqw 6cqw 5cqw; min-height: 10px; background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 4px, var(--ink) 4px 5px, transparent 5px 8px, var(--ink) 8px 11px, transparent 11px 12px); }
+
+/* 이륙 */
+.jet { position: absolute; z-index: 30; left: 0; top: 0; width: 60cqw; opacity: 0; pointer-events: none; filter: drop-shadow(0 20px 20px rgba(11,58,74,.3)); }
+.jet.go { animation: bp-jet 1.4s cubic-bezier(.35,.15,.55,1) forwards; }
+@keyframes bp-jet { 0% { opacity: 1; transform: translate(-70cqw, 92cqh) rotate(-24deg) scale(1.3); } 100% { opacity: 1; transform: translate(120cqw, -20cqh) rotate(-30deg) scale(.5); } }
+.bp.lift .sky { animation: bp-lift 1.6s ease-in forwards; }
+@keyframes bp-lift { to { transform: translateY(18cqh); } }
+
+/* 하단 단추 · 결과 카드 — 탑승권 모양 */
+.gm-cta b { font-size: 20px !important; letter-spacing: -.03em; }
+.gm-cta small { color: #BFEAF0; opacity: 1; }
+.gm-cta .gm-cta-ar { font-size: 24px; font-weight: 900; }
+.gm-res-card { padding-top: 62px !important; overflow: hidden; }
+.gm-res-card::before { content: "BOARDING PASS · 탑승권"; position: absolute; left: 0; right: 0; top: 0; padding: 14px 20px; background: var(--teal); color: #fff; font-family: var(--monob); font-size: 12.5px; letter-spacing: .14em; }
+.gm-res-card::after { content: ""; position: absolute; left: 0; right: 0; top: 46px; height: 0; border-top: 0; }
+.gm-res-eye { font-size: 21px !important; color: var(--teal) !important; letter-spacing: -.03em; }
+.gm-res-price b { color: var(--org); letter-spacing: -.045em; }
+.gm-res-art { right: 14px; top: 8px; width: 64px; z-index: 1; }
+.gm-res-art svg { width: 100%; height: auto; display: block; transform: rotate(-12deg); }
+.gm-res-inc li { border-color: #C5D7DC !important; color: var(--teal); }
+.gm-btn.tel { background: var(--teal); }
+.gm-stamp { color: #fff !important; text-shadow: 0 6px 24px rgba(11,58,74,.5) !important; }
+.gm-stamp small { display: inline-block !important; margin-top: 12px; padding: 6px 16px; border-radius: 999px; background: var(--org); font-size: 20px; color: #fff; font-weight: 900; }
